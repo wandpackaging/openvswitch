@@ -1,0 +1,344 @@
+name: Debian Package Build
+
+on:
+  push:
+    branches:
+      - 'main'
+
+env:
+  DEBIAN_FRONTEND: noninteractive
+  DEBEMAIL: packaging@wand.net.nz
+  DEBFULLNAME: WAND Packaging
+
+jobs:
+  build-matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - name: Build matrix
+        id: set-matrix
+        run: |
+          git_tmp_dir=$(mktemp -d /tmp/distro-info-data-XXXXX)
+          git clone --depth 1 https://salsa.debian.org/debian/distro-info-data "${git_tmp_dir}"
+
+          releases=()
+
+          for release in $(awk -F ',' -v today="$(date --utc "+%F")" \
+              'BEGIN {OFS=","} NR>1 { if (($6 == "" || $6 >= today) && ($5 != "" && $5 <= today)) print $3 }' \
+              "${git_tmp_dir}/ubuntu.csv"); do
+              releases+=("ubuntu:${release}")
+          done
+
+          for release in $(awk -F ',' -v today="$(date --utc "+%F")" \
+              'BEGIN {OFS=","} NR>1 { if (($6 == "" || $6 >= today) && ($4 != "" && $4 <= today)) print $3 }' \
+              "${git_tmp_dir}/debian.csv" | grep -v -E "(sid|experimental)"); do
+              releases+=("debian:${release}")
+          done
+
+          releases+=("debian:stretch")
+
+          matrix=$(printf "%s\n" "${releases[@]}" | jq -nRc '[inputs]')
+
+          echo "::set-output name=matrix::${matrix}"
+
+  stage1-build:
+    runs-on: ubuntu-latest
+    needs: build-matrix
+    container:
+      image: ${{ matrix.target }}
+    strategy:
+      matrix:
+        package:
+          - nasm
+          - rdma-core
+          - libbpf
+        target: ${{ fromJson(needs.build-matrix.outputs.matrix) }}
+        arch:
+          - amd64
+        include:
+          - package: "libisal"
+            target: "ubuntu:xenial"
+            arch: "amd64"
+          - package: "device-tree-compiler"
+            target: "ubuntu:xenial"
+            arch: "amd64"
+        exclude:
+          - package: "libbpf"
+            target: "debian:buster"
+            arch: "amd64"
+          - target: "debian:bullseye"
+          - target: "ubuntu:groovy"
+          - target: "ubuntu:hirsute"
+    env:
+        BUILD_TARGET: ${{ matrix.target }}
+        BUILD_ARCH: ${{ matrix.arch }}
+        BUILD_PACKAGE: ${{ matrix.package }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          apt-get update
+          apt-get -y upgrade
+          apt-get -y install git devscripts equivs dpkg-dev
+      - name: Backport gpg keyrings
+        run: |
+          cd /tmp
+          curl -fLO https://deb.debian.org/debian/pool/main/d/debian-keyring/debian-keyring_2020.12.24_all.deb
+          curl -fLO https://deb.debian.org/debian/pool/main/u/ubuntu-keyring/ubuntu-keyring_2018.09.18.1-5_all.deb
+          dpkg -i debian-keyring_2020.12.24_all.deb
+          dpkg -i ubuntu-keyring_2018.09.18.1-5_all.deb
+      - name: Backport build tools on xenial and stretch
+        run: |
+          apt-get install -y gnupg
+          apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 8B65E182
+          echo "deb http://ppa.launchpad.net/spvkgn/build-dep/ubuntu xenial main" > /etc/apt/sources.list.d/spvkgn-ubuntu-build-dep-xenial.list
+          apt-get update
+          apt-get install -y debhelper dpkg-dev meson ninja-build
+        if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial'
+      - name: Backport build tools on bionic
+        run: |
+          cd /tmp
+          apt-get install -y ninja-build
+          curl -fLO https://deb.debian.org/debian/pool/main/m/meson/meson_0.49.2-1_all.deb
+          dpkg -i meson_0.49.2-1_all.deb
+        if: matrix.target == 'ubuntu:bionic'
+      - name: Build package
+        run: |
+          cd "./${{ matrix.package }}/"
+          ./boot.sh
+          cd src
+          mk-build-deps -i -r -t "apt-get -f -y --force-yes"
+          dpkg-buildpackage -b -us -uc -rfakeroot -j4
+          dirname=$(echo ${{ matrix.target }} | tr ':' '_')
+          package_path="${GITHUB_WORKSPACE}/packages/${dirname}"
+          mkdir -p "${package_path}"
+          mv ../*.deb "${package_path}"
+      - name: Publish packages to cloudsmith
+        uses: wanduow/action-cloudsmith-upload-packages@v1
+        with:
+          path: packages/
+          repo: wand/openvswitch
+          username: brad-cowie
+          api_key: ${{ secrets.CLOUDSMITH_API_KEY }}
+
+  stage2-build:
+    runs-on: ubuntu-latest
+    needs:
+      - build-matrix
+      - stage1-build
+    container:
+      image: ${{ matrix.target }}
+    strategy:
+      matrix:
+        package:
+          - intel-ipsec-mb
+        target: ${{ fromJson(needs.build-matrix.outputs.matrix) }}
+        arch:
+          - amd64
+        exclude:
+          - target: "debian:bullseye"
+          - target: "ubuntu:focal"
+          - target: "ubuntu:groovy"
+          - target: "ubuntu:hirsute"
+    env:
+        BUILD_TARGET: ${{ matrix.target }}
+        BUILD_ARCH: ${{ matrix.arch }}
+        BUILD_PACKAGE: ${{ matrix.package }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          apt-get update
+          apt-get -y upgrade
+          apt-get -y install git devscripts equivs dpkg-dev
+      - name: Backport gpg keyrings
+        run: |
+          cd /tmp
+          curl -fLO https://deb.debian.org/debian/pool/main/d/debian-keyring/debian-keyring_2020.12.24_all.deb
+          curl -fLO https://deb.debian.org/debian/pool/main/u/ubuntu-keyring/ubuntu-keyring_2018.09.18.1-5_all.deb
+          dpkg -i debian-keyring_2020.12.24_all.deb
+          dpkg -i ubuntu-keyring_2018.09.18.1-5_all.deb
+      - name: Backport build tools on xenial and stretch
+        run: |
+          apt-get install -y gnupg
+          apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 8B65E182
+          echo "deb http://ppa.launchpad.net/spvkgn/build-dep/ubuntu xenial main" > /etc/apt/sources.list.d/spvkgn-ubuntu-build-dep-xenial.list
+          apt-get update
+          apt-get install -y debhelper dpkg-dev meson ninja-build
+        if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial'
+      - name: Backport build tools on bionic
+        run: |
+          cd /tmp
+          apt-get install -y ninja-build
+          curl -fLO https://deb.debian.org/debian/pool/main/m/meson/meson_0.49.2-1_all.deb
+          dpkg -i meson_0.49.2-1_all.deb
+        if: matrix.target == 'ubuntu:bionic'
+      - name: Add openvswitch apt repo
+        run: |
+          curl -1sLf 'https://dl.cloudsmith.io/public/wand/openvswitch/cfg/setup/bash.deb.sh' | bash
+      - name: Build package
+        run: |
+          cd "./${{ matrix.package }}/"
+          ./boot.sh
+          cd src
+          mk-build-deps -i -r -t "apt-get -f -y --force-yes"
+          dpkg-buildpackage -b -us -uc -rfakeroot -j4
+          dirname=$(echo ${{ matrix.target }} | tr ':' '_')
+          package_path="${GITHUB_WORKSPACE}/packages/${dirname}"
+          mkdir -p "${package_path}"
+          mv ../*.deb "${package_path}"
+      - name: Publish packages to cloudsmith
+        uses: wanduow/action-cloudsmith-upload-packages@v1
+        with:
+          path: packages/
+          repo: wand/openvswitch
+          username: brad-cowie
+          api_key: ${{ secrets.CLOUDSMITH_API_KEY }}
+
+  stage3-build:
+    runs-on: ubuntu-latest
+    needs:
+      - build-matrix
+      - stage2-build
+    container:
+      image: ${{ matrix.target }}
+    strategy:
+      matrix:
+        package:
+          - dpdk
+        target: ${{ fromJson(needs.build-matrix.outputs.matrix) }}
+        arch:
+          - amd64
+        exclude:
+          - target: "debian:bullseye"
+          - target: "ubuntu:hirsute"
+    env:
+        BUILD_TARGET: ${{ matrix.target }}
+        BUILD_ARCH: ${{ matrix.arch }}
+        BUILD_PACKAGE: ${{ matrix.package }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          apt-get update
+          apt-get -y upgrade
+          apt-get -y install git devscripts equivs dpkg-dev
+      - name: Backport gpg keyrings
+        run: |
+          cd /tmp
+          curl -fLO https://deb.debian.org/debian/pool/main/d/debian-keyring/debian-keyring_2020.12.24_all.deb
+          curl -fLO https://deb.debian.org/debian/pool/main/u/ubuntu-keyring/ubuntu-keyring_2018.09.18.1-5_all.deb
+          dpkg -i debian-keyring_2020.12.24_all.deb
+          dpkg -i ubuntu-keyring_2018.09.18.1-5_all.deb
+      - name: Backport build tools on xenial and stretch
+        run: |
+          apt-get install -y gnupg
+          apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 8B65E182
+          echo "deb http://ppa.launchpad.net/spvkgn/build-dep/ubuntu xenial main" > /etc/apt/sources.list.d/spvkgn-ubuntu-build-dep-xenial.list
+          apt-get update
+          apt-get install -y debhelper dpkg-dev meson ninja-build
+        if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial'
+      - name: Backport build tools on bionic
+        run: |
+          cd /tmp
+          apt-get install -y ninja-build
+          curl -fLO https://deb.debian.org/debian/pool/main/m/meson/meson_0.49.2-1_all.deb
+          dpkg -i meson_0.49.2-1_all.deb
+        if: matrix.target == 'ubuntu:bionic'
+      - name: Add openvswitch apt repo
+        run: |
+          curl -1sLf 'https://dl.cloudsmith.io/public/wand/openvswitch/cfg/setup/bash.deb.sh' | bash
+      - name: Build package
+        run: |
+          cd "./${{ matrix.package }}/"
+          ./boot.sh
+          cd src
+          mk-build-deps -i -r -t "apt-get -f -y --force-yes"
+          dpkg-buildpackage -b -us -uc -rfakeroot -j4
+          dirname=$(echo ${{ matrix.target }} | tr ':' '_')
+          package_path="${GITHUB_WORKSPACE}/packages/${dirname}"
+          mkdir -p "${package_path}"
+          mv ../*.deb "${package_path}"
+      - name: Publish packages to cloudsmith
+        uses: wanduow/action-cloudsmith-upload-packages@v1
+        with:
+          path: packages/
+          repo: wand/openvswitch
+          username: brad-cowie
+          api_key: ${{ secrets.CLOUDSMITH_API_KEY }}
+
+  stage4-build:
+    runs-on: ubuntu-latest
+    needs:
+      - build-matrix
+      - stage3-build
+    container:
+      image: ${{ matrix.target }}
+    strategy:
+      matrix:
+        package:
+          - openvswitch
+        target: ${{ fromJson(needs.build-matrix.outputs.matrix) }}
+        arch:
+          - amd64
+        exclude:
+          - target: "debian:bullseye"
+    env:
+        BUILD_TARGET: ${{ matrix.target }}
+        BUILD_ARCH: ${{ matrix.arch }}
+        BUILD_PACKAGE: ${{ matrix.package }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          apt-get update
+          apt-get -y upgrade
+          apt-get -y install git devscripts equivs dpkg-dev
+      - name: Backport gpg keyrings
+        run: |
+          cd /tmp
+          curl -fLO https://deb.debian.org/debian/pool/main/d/debian-keyring/debian-keyring_2020.12.24_all.deb
+          curl -fLO https://deb.debian.org/debian/pool/main/u/ubuntu-keyring/ubuntu-keyring_2018.09.18.1-5_all.deb
+          dpkg -i debian-keyring_2020.12.24_all.deb
+          dpkg -i ubuntu-keyring_2018.09.18.1-5_all.deb
+      - name: Backport build tools on xenial and stretch
+        run: |
+          apt-get install -y gnupg
+          apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 8B65E182
+          echo "deb http://ppa.launchpad.net/spvkgn/build-dep/ubuntu xenial main" > /etc/apt/sources.list.d/spvkgn-ubuntu-build-dep-xenial.list
+          apt-get update
+          apt-get install -y debhelper dpkg-dev meson ninja-build
+        if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial'
+      - name: Backport build tools on bionic
+        run: |
+          cd /tmp
+          apt-get install -y ninja-build
+          curl -fLO https://deb.debian.org/debian/pool/main/m/meson/meson_0.49.2-1_all.deb
+          dpkg -i meson_0.49.2-1_all.deb
+        if: matrix.target == 'ubuntu:bionic'
+      - name: Add openvswitch apt repo
+        run: |
+          curl -1sLf 'https://dl.cloudsmith.io/public/wand/openvswitch/cfg/setup/bash.deb.sh' | bash
+      - name: Build package
+        run: |
+          cd "./${{ matrix.package }}/"
+          ./boot.sh
+          cd src
+          mk-build-deps -i -r -t "apt-get -f -y --force-yes"
+          dpkg-buildpackage -b -us -uc -rfakeroot -j4
+          dirname=$(echo ${{ matrix.target }} | tr ':' '_')
+          package_path="${GITHUB_WORKSPACE}/packages/${dirname}"
+          mkdir -p "${package_path}"
+          mv ../*.deb "${package_path}"
+      - name: Publish packages to cloudsmith
+        uses: wanduow/action-cloudsmith-upload-packages@v1
+        with:
+          path: packages/
+          repo: wand/openvswitch
+          username: brad-cowie
+          api_key: ${{ secrets.CLOUDSMITH_API_KEY }}
