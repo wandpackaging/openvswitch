@@ -28,15 +28,18 @@ jobs:
           apt-get -y install git devscripts dpkg-dev debhelper equivs
       - name: Build package
         run: |
-          git clone --recurse-submodules https://github.com/linux-rdma/rdma-core -b v32.0
+          mkdir rdma-core
           cd rdma-core
+          git clone --recurse-submodules https://github.com/linux-rdma/rdma-core -b v32.0 src
+          cd src
           mk-build-deps -i -r -t 'apt-get -f -y --force-yes'
           dpkg-buildpackage -b -us -uc -rfakeroot -j4
       - name: Store packages
         run: |
           dirname=$(echo ${{ matrix.target }} | tr ':' '_')
+          cd rdma-core
           mkdir -p packages/${dirname}
-          cp ../*.deb packages/${dirname}/
+          cp *.deb packages/${dirname}/
       - name: Publish packages to cloudsmith
         uses: wanduow/action-cloudsmith-upload-packages@v1
         with:
