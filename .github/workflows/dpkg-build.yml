@@ -1,0 +1,46 @@
+name: Debian Package Build
+
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  build-rdma-core:
+    runs-on: ubuntu-latest
+    container:
+      image: ${{ matrix.target }}
+    strategy:
+      matrix:
+        arch:
+          - amd64
+        target:
+            - "debian:stretch"
+            - "debian:buster"
+            - "ubuntu:xenial"
+            - "ubuntu:bionic"
+            - "ubuntu:focal"
+    steps:
+      - name: Install dependencies
+        run: |
+          apt-get update
+          apt-get -y upgrade
+          apt-get -y install git devscripts dpkg-dev debhelper equivs
+      - name: Build package
+        run: |
+          git clone --recurse-submodules https://github.com/linux-rdma/rdma-core -b v32.0
+          cd rdma-core
+          mk-build-deps -i -r -t 'apt-get -f -y --force-yes'
+          dpkg-buildpackage -b -us -uc -rfakeroot -j4
+      - name: Store packages
+        run: |
+          dirname=$(echo ${{ matrix.target }} | tr ':' '_')
+          mkdir -p packages/${dirname}
+          cp ../*.deb packages/${dirname}/
+      - name: Publish packages to cloudsmith
+        uses: wanduow/action-cloudsmith-upload-packages@v1
+        with:
+          path: packages/
+          repo: wand/openvswitch
+          username: brad-cowie
+          api_key: ${{ secrets.CLOUDSMITH_API_KEY }}
