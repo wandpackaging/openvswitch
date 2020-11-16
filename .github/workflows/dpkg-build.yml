@@ -29,6 +29,7 @@ jobs:
       - name: Build package
         run: |
           git clone --recurse-submodules https://github.com/linux-rdma/rdma-core -b v32.0
+          cd rdma-core
           mk-build-deps -i -r -t 'apt-get -f -y --force-yes'
           dpkg-buildpackage -b -us -uc -rfakeroot -j4
       - name: Store packages
