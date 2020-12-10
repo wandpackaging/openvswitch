@@ -1,1 +1,1 @@
-git clone --recurse-submodules https://github.com/sudipm-mukherjee/libbpf -b v0.1.0 src
+git clone --recurse-submodules https://github.com/sudipm-mukherjee/libbpf -b debian/0.2-1 src
