@@ -60,6 +60,17 @@ jobs:
           apt-get update
           apt-get -y upgrade
           apt-get -y install git devscripts dpkg-dev debhelper equivs
+      - name: Backport build tools on xenial
+        run: |
+          apt-get update
+          apt-get install -y software-properties-common gcc cpp g++
+          add-apt-repository ppa:savoury1/build-tools
+          add-apt-repository ppa:savoury1/backports
+          apt-get update
+          apt-get install -y debhelper quilt
+          rm /etc/apt/sources.list.d/savoury1-ubuntu-*.list
+          apt-get update
+        if: matrix.target == 'ubuntu:xenial'
       - name: Build package
         run: |
           cd "./${{ matrix.package }}/"
