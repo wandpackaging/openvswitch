@@ -66,11 +66,10 @@ jobs:
           cd src
           mk-build-deps -i -r -t 'apt-get -f -y --force-yes'
           dpkg-buildpackage -b -us -uc -rfakeroot -j4
-      - name: Store packages
-        run: |
           dirname=$(echo ${{ matrix.target }} | tr ':' '_')
-          mkdir -p packages/${dirname}
-          cp *.deb packages/${dirname}/
+          package_path="${GITHUB_WORKSPACE}/packages/${dirname}"
+          mkdir -p "${package_path}"
+          mv ../*.deb "${package_path}"
       - name: Publish packages to cloudsmith
         uses: wanduow/action-cloudsmith-upload-packages@v1.1
         with:
