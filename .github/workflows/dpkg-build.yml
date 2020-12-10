@@ -38,7 +38,7 @@ jobs:
 
           echo "::set-output name=matrix::${matrix}"
 
-  build-rdma-core:
+  build-package:
     runs-on: ubuntu-latest
     needs: build-matrix
     container:
@@ -48,16 +48,22 @@ jobs:
         arch:
           - amd64
         target: ${{ fromJson(needs.build-matrix.outputs.matrix) }}
+        package:
+          - rdma-core
+      max-parallel: 1
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
       - name: Install dependencies
         run: |
           apt-get update
           apt-get -y upgrade
           apt-get -y install git devscripts dpkg-dev debhelper equivs
+      - name: Prep package
+        run: |
+          ./${{ matrix.package }}/boot.sh
       - name: Build package
         run: |
-          git clone --recurse-submodules https://github.com/linux-rdma/rdma-core -b v32.0
-          cd rdma-core
           mk-build-deps -i -r -t 'apt-get -f -y --force-yes'
           dpkg-buildpackage -b -us -uc -rfakeroot -j4
       - name: Store packages
