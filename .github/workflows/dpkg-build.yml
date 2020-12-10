@@ -38,7 +38,7 @@ jobs:
 
           echo "::set-output name=matrix::${matrix}"
 
-  build-package:
+  build-standalone-package:
     runs-on: ubuntu-latest
     needs: build-matrix
     container:
@@ -50,7 +50,8 @@ jobs:
         target: ${{ fromJson(needs.build-matrix.outputs.matrix) }}
         package:
           - rdma-core
-      max-parallel: 1
+          - libbpf
+      max-parallel: 20
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
