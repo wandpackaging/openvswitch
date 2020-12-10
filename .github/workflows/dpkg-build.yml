@@ -63,7 +63,7 @@ jobs:
         run: |
           cd "./${{ matrix.package }}/"
           ./boot.sh
-          pwd
+          cd src
           mk-build-deps -i -r -t 'apt-get -f -y --force-yes'
           dpkg-buildpackage -b -us -uc -rfakeroot -j4
       - name: Store packages
