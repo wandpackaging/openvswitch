@@ -61,7 +61,8 @@ jobs:
           apt-get -y install git devscripts dpkg-dev debhelper equivs
       - name: Build package
         run: |
-          ./${{ matrix.package }}/boot.sh
+          cd "./${{ matrix.package }}/"
+          ./boot.sh
           mk-build-deps -i -r -t 'apt-get -f -y --force-yes'
           dpkg-buildpackage -b -us -uc -rfakeroot -j4
       - name: Store packages
