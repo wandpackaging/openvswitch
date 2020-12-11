@@ -52,7 +52,7 @@ jobs:
         target: ${{ fromJson(needs.build-matrix.outputs.matrix) }}
         arch:
           - amd64
-      max-parallel: 5
+      max-parallel: 6
     env:
         BUILD_TARGET: ${{ matrix.target }}
         BUILD_ARCH: ${{ matrix.arch }}
