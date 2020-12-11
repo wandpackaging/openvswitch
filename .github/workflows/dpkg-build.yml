@@ -63,13 +63,7 @@ jobs:
       - name: Backport build tools on xenial
         run: |
           apt-get update
-          apt-get install -y software-properties-common gcc cpp g++
-          add-apt-repository ppa:savoury1/build-tools
-          add-apt-repository ppa:savoury1/backports
-          apt-get update
-          apt-get install -y debhelper quilt cmake
-          rm /etc/apt/sources.list.d/savoury1-ubuntu-*.list
-          apt-get update
+          apt-get install -y -t xenial-backports debhelper ninja-build
         if: matrix.target == 'ubuntu:xenial'
       - name: Build package
         run: |
