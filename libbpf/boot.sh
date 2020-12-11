@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -euo pipefail
+
 git clone --recurse-submodules https://github.com/sudipm-mukherjee/libbpf -b debian/0.2-1 src
 
 if [ "${BUILD_TARGET}" == "ubuntu:xenial" ]; then
