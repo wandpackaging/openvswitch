@@ -49,6 +49,7 @@ jobs:
           - amd64
         target: ${{ fromJson(needs.build-matrix.outputs.matrix) }}
         package:
+          - intel-ipsec-mb
           - rdma-core
           - libbpf
       max-parallel: 5
