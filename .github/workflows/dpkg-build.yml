@@ -91,7 +91,9 @@ jobs:
 
   stage2-build:
     runs-on: ubuntu-latest
-    needs: build-matrix
+    needs:
+      - build-matrix
+      - stage1-build
     container:
       image: ${{ matrix.target }}
     strategy:
