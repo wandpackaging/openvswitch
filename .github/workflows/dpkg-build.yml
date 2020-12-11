@@ -52,9 +52,11 @@ jobs:
         target: ${{ fromJson(needs.build-matrix.outputs.matrix) }}
         arch:
           - amd64
+        include:
+          - target: "debian:stretch"
+        exclude:
+          - target: "debian:bullseye"
       max-parallel: 6
-      exclude:
-        - target: "debian:bullseye"
     env:
         BUILD_TARGET: ${{ matrix.target }}
         BUILD_ARCH: ${{ matrix.arch }}
@@ -105,9 +107,11 @@ jobs:
         target: ${{ fromJson(needs.build-matrix.outputs.matrix) }}
         arch:
           - amd64
+        include:
+          - target: "debian:stretch"
+        exclude:
+          - target: "debian:bullseye"
       max-parallel: 5
-      exclude:
-        - target: "debian:bullseye"
     env:
         BUILD_TARGET: ${{ matrix.target }}
         BUILD_ARCH: ${{ matrix.arch }}
