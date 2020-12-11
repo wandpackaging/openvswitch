@@ -63,7 +63,7 @@ jobs:
         run: |
           apt-get update
           apt-get -y upgrade
-          apt-get -y install git devscripts dpkg-dev debhelper equivs
+          apt-get -y install git devscripts dpkg-dev debhelper equivs debian-keyring ubuntu-keyring
       - name: Backport build tools on xenial
         run: |
           apt-get update
