@@ -45,13 +45,13 @@ jobs:
       image: ${{ matrix.target }}
     strategy:
       matrix:
-        arch:
-          - amd64
-        target: ${{ fromJson(needs.build-matrix.outputs.matrix) }}
         package:
           - nasm
           - rdma-core
           - libbpf
+        target: ${{ fromJson(needs.build-matrix.outputs.matrix) }}
+        arch:
+          - amd64
       max-parallel: 5
     env:
         BUILD_TARGET: ${{ matrix.target }}
@@ -98,11 +98,11 @@ jobs:
       image: ${{ matrix.target }}
     strategy:
       matrix:
-        arch:
-          - amd64
-        target: ${{ fromJson(needs.build-matrix.outputs.matrix) }}
         package:
           - intel-ipsec-mb
+        target: ${{ fromJson(needs.build-matrix.outputs.matrix) }}
+        arch:
+          - amd64
       max-parallel: 5
     env:
         BUILD_TARGET: ${{ matrix.target }}
