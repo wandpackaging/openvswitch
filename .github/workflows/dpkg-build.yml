@@ -52,6 +52,10 @@ jobs:
           - rdma-core
           - libbpf
       max-parallel: 20
+    env:
+        BUILD_TARGET: ${{ matrix.target }}
+        BUILD_ARCH: ${{ matrix.arch }}
+        BUILD_PACKAGE: ${{ matrix.package }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
