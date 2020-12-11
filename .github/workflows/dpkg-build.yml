@@ -49,6 +49,7 @@ jobs:
           - amd64
         target: ${{ fromJson(needs.build-matrix.outputs.matrix) }}
         package:
+          - nasm
           - rdma-core
           - libbpf
       max-parallel: 5
