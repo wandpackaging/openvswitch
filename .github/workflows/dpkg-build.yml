@@ -51,7 +51,7 @@ jobs:
         package:
           - rdma-core
           - libbpf
-      max-parallel: 20
+      max-parallel: 5
     env:
         BUILD_TARGET: ${{ matrix.target }}
         BUILD_ARCH: ${{ matrix.arch }}
