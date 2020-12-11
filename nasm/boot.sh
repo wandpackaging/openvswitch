@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-git clone --recurse-submodules https://salsa.debian.org/debian/nasm -b 2.15.05-1 src
+git clone --recurse-submodules https://salsa.debian.org/debian/nasm -b debian/2.15.05-1 src
 
 debhelper_version=$(dpkg-query --showformat='${Version}' --show debhelper)
 
