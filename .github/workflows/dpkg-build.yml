@@ -67,7 +67,7 @@ jobs:
           add-apt-repository ppa:savoury1/build-tools
           add-apt-repository ppa:savoury1/backports
           apt-get update
-          apt-get install -y debhelper quilt
+          apt-get install -y debhelper quilt cmake
           rm /etc/apt/sources.list.d/savoury1-ubuntu-*.list
           apt-get update
         if: matrix.target == 'ubuntu:xenial'
