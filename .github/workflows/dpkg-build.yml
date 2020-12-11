@@ -38,7 +38,57 @@ jobs:
 
           echo "::set-output name=matrix::${matrix}"
 
-  build-standalone-package:
+  stage1-build:
+    runs-on: ubuntu-latest
+    needs: build-matrix
+    container:
+      image: ${{ matrix.target }}
+    strategy:
+      matrix:
+        arch:
+          - amd64
+        target: ${{ fromJson(needs.build-matrix.outputs.matrix) }}
+        package:
+          - rdma-core
+          - libbpf
+      max-parallel: 5
+    env:
+        BUILD_TARGET: ${{ matrix.target }}
+        BUILD_ARCH: ${{ matrix.arch }}
+        BUILD_PACKAGE: ${{ matrix.package }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          apt-get update
+          apt-get -y upgrade
+          apt-get -y install git devscripts dpkg-dev debhelper equivs debian-keyring ubuntu-keyring
+      - name: Backport build tools on xenial
+        run: |
+          apt-get update
+          apt-get install -y -t xenial-backports debhelper ninja-build
+        if: matrix.target == 'ubuntu:xenial'
+      - name: Build package
+        run: |
+          cd "./${{ matrix.package }}/"
+          ./boot.sh
+          cd src
+          mk-build-deps -i -r -t 'apt-get -f -y --force-yes'
+          dpkg-buildpackage -b -us -uc -rfakeroot -j4
+          dirname=$(echo ${{ matrix.target }} | tr ':' '_')
+          package_path="${GITHUB_WORKSPACE}/packages/${dirname}"
+          mkdir -p "${package_path}"
+          mv ../*.deb "${package_path}"
+      - name: Publish packages to cloudsmith
+        uses: wanduow/action-cloudsmith-upload-packages@v1.1
+        with:
+          path: packages/
+          repo: wand/openvswitch
+          username: brad-cowie
+          api_key: ${{ secrets.CLOUDSMITH_API_KEY }}
+
+  stage2-build:
     runs-on: ubuntu-latest
     needs: build-matrix
     container:
@@ -50,8 +100,6 @@ jobs:
         target: ${{ fromJson(needs.build-matrix.outputs.matrix) }}
         package:
           - intel-ipsec-mb
-          - rdma-core
-          - libbpf
       max-parallel: 5
     env:
         BUILD_TARGET: ${{ matrix.target }}
