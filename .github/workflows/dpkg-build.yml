@@ -52,7 +52,6 @@ jobs:
           - rdma-core
           - libbpf
           - libisal
-          - meson
         target: ${{ fromJson(needs.build-matrix.outputs.matrix) }}
         arch:
           - amd64
