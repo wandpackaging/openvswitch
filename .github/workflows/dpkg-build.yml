@@ -98,7 +98,7 @@ jobs:
           mkdir -p "${package_path}"
           mv ../*.deb "${package_path}"
       - name: Publish packages to cloudsmith
-        uses: wanduow/action-cloudsmith-upload-packages@v1.1
+        uses: wanduow/action-cloudsmith-upload-packages@v1.2
         with:
           path: packages/
           repo: wand/openvswitch
@@ -151,7 +151,7 @@ jobs:
           mkdir -p "${package_path}"
           mv ../*.deb "${package_path}"
       - name: Publish packages to cloudsmith
-        uses: wanduow/action-cloudsmith-upload-packages@v1.1
+        uses: wanduow/action-cloudsmith-upload-packages@v1.2
         with:
           path: packages/
           repo: wand/openvswitch
