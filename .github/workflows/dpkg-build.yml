@@ -51,6 +51,7 @@ jobs:
           - nasm
           - rdma-core
           - libbpf
+          - meson
         target: ${{ fromJson(needs.build-matrix.outputs.matrix) }}
         arch:
           - amd64
