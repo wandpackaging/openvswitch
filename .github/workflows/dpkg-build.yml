@@ -121,7 +121,7 @@ jobs:
           - amd64
         exclude:
           - target: "debian:bullseye"
-      max-parallel: 5
+      max-parallel: 6
     env:
         BUILD_TARGET: ${{ matrix.target }}
         BUILD_ARCH: ${{ matrix.arch }}
