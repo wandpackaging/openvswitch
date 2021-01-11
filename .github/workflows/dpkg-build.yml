@@ -75,16 +75,16 @@ jobs:
           curl -L -O https://deb.debian.org/debian/pool/main/u/ubuntu-keyring/ubuntu-keyring_2018.09.18.1-5_all.deb
           dpkg -i debian-keyring_2020.12.24_all.deb
           dpkg -i ubuntu-keyring_2018.09.18.1-5_all.deb
-      - name: Backport meson
-        run: |
-          curl -L -O https://deb.debian.org/debian/pool/main/m/meson/meson_0.49.2-1_all.deb
-          dpkg -i meson_0.49.2-1_all.deb
-        if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial' || matrix.target == 'ubuntu:bionic'
       - name: Backport build tools on xenial
         run: |
           apt-get update
           apt-get install -y -t xenial-backports debhelper ninja-build
         if: matrix.target == 'ubuntu:xenial'
+      - name: Backport meson
+        run: |
+          curl -L -O https://deb.debian.org/debian/pool/main/m/meson/meson_0.49.2-1_all.deb
+          dpkg -i meson_0.49.2-1_all.deb
+        if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial' || matrix.target == 'ubuntu:bionic'
       - name: Build package
         run: |
           cd "./${{ matrix.package }}/"
@@ -138,16 +138,16 @@ jobs:
           curl -L -O https://deb.debian.org/debian/pool/main/u/ubuntu-keyring/ubuntu-keyring_2018.09.18.1-5_all.deb
           dpkg -i debian-keyring_2020.12.24_all.deb
           dpkg -i ubuntu-keyring_2018.09.18.1-5_all.deb
-      - name: Backport meson
-        run: |
-          curl -L -O https://deb.debian.org/debian/pool/main/m/meson/meson_0.49.2-1_all.deb
-          dpkg -i meson_0.49.2-1_all.deb
-        if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial' || matrix.target == 'ubuntu:bionic'
       - name: Backport build tools on xenial
         run: |
           apt-get update
           apt-get install -y -t xenial-backports debhelper ninja-build
         if: matrix.target == 'ubuntu:xenial'
+      - name: Backport meson
+        run: |
+          curl -L -O https://deb.debian.org/debian/pool/main/m/meson/meson_0.49.2-1_all.deb
+          dpkg -i meson_0.49.2-1_all.deb
+        if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial' || matrix.target == 'ubuntu:bionic'
       - name: Add openvswitch apt repo
         run: |
           curl -1sLf 'https://dl.cloudsmith.io/public/wand/openvswitch/cfg/setup/bash.deb.sh' | bash
