@@ -82,6 +82,7 @@ jobs:
         if: matrix.target == 'ubuntu:xenial'
       - name: Backport meson
         run: |
+          apt-get install -y ninja-build
           curl -L -O https://deb.debian.org/debian/pool/main/m/meson/meson_0.49.2-1_all.deb
           dpkg -i meson_0.49.2-1_all.deb
         if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial' || matrix.target == 'ubuntu:bionic'
@@ -145,6 +146,7 @@ jobs:
         if: matrix.target == 'ubuntu:xenial'
       - name: Backport meson
         run: |
+          apt-get install -y ninja-build
           curl -L -O https://deb.debian.org/debian/pool/main/m/meson/meson_0.49.2-1_all.deb
           dpkg -i meson_0.49.2-1_all.deb
         if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial' || matrix.target == 'ubuntu:bionic'
