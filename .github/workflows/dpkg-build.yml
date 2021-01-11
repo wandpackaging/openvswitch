@@ -69,18 +69,12 @@ jobs:
           apt-get update
           apt-get -y upgrade
           apt-get -y install git devscripts dpkg-dev debhelper equivs
-      - name: Install keyrings
+      - name: Install latest keyrings
         run: |
-          apt-get update
-          apt-get -y upgrade
-          apt-get -y install debian-keyring ubuntu-keyring
-        if: matrix.target != 'debian:stretch'
-      - name: Install keyrings on debian stretch
-        run: |
-          apt-get update
-          apt-get -y upgrade
-          apt-get -y install debian-keyring ubuntu-archive-keyring
-        if: matrix.target == 'debian:stretch'
+          curl -L -O https://deb.debian.org/debian/pool/main/d/debian-keyring/debian-keyring_2020.12.24_all.deb
+          curl -L -O https://deb.debian.org/debian/pool/main/u/ubuntu-keyring/ubuntu-keyring_2018.09.18.1-5_all.deb
+          dpkg -i debian-keyring_2020.12.24_all.deb
+          dpkg -i ubuntu-keyring_2018.09.18.1-5_all.deb
       - name: Backport build tools on xenial
         run: |
           apt-get update
@@ -133,18 +127,12 @@ jobs:
           apt-get update
           apt-get -y upgrade
           apt-get -y install git devscripts dpkg-dev debhelper equivs
-      - name: Install keyrings
+      - name: Install latest keyrings
         run: |
-          apt-get update
-          apt-get -y upgrade
-          apt-get -y install debian-keyring ubuntu-keyring
-        if: matrix.target != 'debian:stretch'
-      - name: Install keyrings on debian stretch
-        run: |
-          apt-get update
-          apt-get -y upgrade
-          apt-get -y install debian-keyring ubuntu-archive-keyring
-        if: matrix.target == 'debian:stretch'
+          curl -L -O https://deb.debian.org/debian/pool/main/d/debian-keyring/debian-keyring_2020.12.24_all.deb
+          curl -L -O https://deb.debian.org/debian/pool/main/u/ubuntu-keyring/ubuntu-keyring_2018.09.18.1-5_all.deb
+          dpkg -i debian-keyring_2020.12.24_all.deb
+          dpkg -i ubuntu-keyring_2018.09.18.1-5_all.deb
       - name: Backport build tools on xenial
         run: |
           apt-get update
