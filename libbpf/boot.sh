@@ -6,6 +6,9 @@ git clone --recurse-submodules https://github.com/sudipm-mukherjee/libbpf -b deb
 
 if [ "${BUILD_TARGET}" == "ubuntu:xenial" ]; then
     sed -i 's/DEB_BUILD_MAINT_OPTIONS = hardening=+all/DEB_BUILD_MAINT_OPTIONS =/' src/debian/rules
+fi
+
+if [ "${BUILD_TARGET}" == "ubuntu:xenial" ] || [ "${BUILD_TARGET}" == "debian:stretch" ]; then
     apt-get -y install zlib1g-dev
 fi
 
