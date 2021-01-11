@@ -34,6 +34,8 @@ jobs:
               releases+=("debian:${release}")
           done
 
+          releases+=("debian:stretch")
+
           matrix=$(printf "%s\n" "${releases[@]}" | jq -nRc '[inputs]')
 
           echo "::set-output name=matrix::${matrix}"
@@ -52,8 +54,6 @@ jobs:
         target: ${{ fromJson(needs.build-matrix.outputs.matrix) }}
         arch:
           - amd64
-        include:
-          - target: "debian:stretch"
         exclude:
           - target: "debian:bullseye"
       max-parallel: 6
@@ -107,8 +107,6 @@ jobs:
         target: ${{ fromJson(needs.build-matrix.outputs.matrix) }}
         arch:
           - amd64
-        include:
-          - target: "debian:stretch"
         exclude:
           - target: "debian:bullseye"
       max-parallel: 5
