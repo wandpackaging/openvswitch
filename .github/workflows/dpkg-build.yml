@@ -151,6 +151,9 @@ jobs:
           apt-get update
           apt-get install -y -t xenial-backports debhelper ninja-build
         if: matrix.target == 'ubuntu:xenial'
+      - name: Add openvswitch apt repo
+        run: |
+          curl -1sLf 'https://dl.cloudsmith.io/public/wand/openvswitch/cfg/setup/bash.deb.sh' | bash
       - name: Build package
         run: |
           cd "./${{ matrix.package }}/"
