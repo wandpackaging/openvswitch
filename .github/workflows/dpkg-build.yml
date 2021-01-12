@@ -80,6 +80,10 @@ jobs:
           curl -fLO https://deb.debian.org/debian/pool/main/u/ubuntu-keyring/ubuntu-keyring_2018.09.18.1-5_all.deb
           dpkg -i debian-keyring_2020.12.24_all.deb
           dpkg -i ubuntu-keyring_2018.09.18.1-5_all.deb
+      - name: Add backports repo for stretch
+        run: |
+          echo "deb http://deb.debian.org/debian stretch-backports main" >> /etc/apt/sources.list
+        if: matrix.target == 'debian:stretch'
       - name: Enable backports for build deps on older debian and ubuntu
         run: |
           echo "APT_TARGET_RELEASE=-t $(lsb_release --codename --short)-backports" >> ${GITHUB_ENV}
@@ -157,6 +161,10 @@ jobs:
           curl -fLO https://deb.debian.org/debian/pool/main/u/ubuntu-keyring/ubuntu-keyring_2018.09.18.1-5_all.deb
           dpkg -i debian-keyring_2020.12.24_all.deb
           dpkg -i ubuntu-keyring_2018.09.18.1-5_all.deb
+      - name: Add backports repo for stretch
+        run: |
+          echo "deb http://deb.debian.org/debian stretch-backports main" >> /etc/apt/sources.list
+        if: matrix.target == 'debian:stretch'
       - name: Enable backports for build deps on older debian and ubuntu
         run: |
           echo "APT_TARGET_RELEASE=-t $(lsb_release --codename --short)-backports" >> ${GITHUB_ENV}
@@ -237,6 +245,10 @@ jobs:
           curl -fLO https://deb.debian.org/debian/pool/main/u/ubuntu-keyring/ubuntu-keyring_2018.09.18.1-5_all.deb
           dpkg -i debian-keyring_2020.12.24_all.deb
           dpkg -i ubuntu-keyring_2018.09.18.1-5_all.deb
+      - name: Add backports repo for stretch
+        run: |
+          echo "deb http://deb.debian.org/debian stretch-backports main" >> /etc/apt/sources.list
+        if: matrix.target == 'debian:stretch'
       - name: Enable backports for build deps on older debian and ubuntu
         run: |
           echo "APT_TARGET_RELEASE=-t $(lsb_release --codename --short)-backports" >> ${GITHUB_ENV}
@@ -317,6 +329,10 @@ jobs:
           curl -fLO https://deb.debian.org/debian/pool/main/u/ubuntu-keyring/ubuntu-keyring_2018.09.18.1-5_all.deb
           dpkg -i debian-keyring_2020.12.24_all.deb
           dpkg -i ubuntu-keyring_2018.09.18.1-5_all.deb
+      - name: Add backports repo for stretch
+        run: |
+          echo "deb http://deb.debian.org/debian stretch-backports main" >> /etc/apt/sources.list
+        if: matrix.target == 'debian:stretch'
       - name: Enable backports for build deps on older debian and ubuntu
         run: |
           echo "APT_TARGET_RELEASE=-t $(lsb_release --codename --short)-backports" >> ${GITHUB_ENV}
