@@ -82,7 +82,7 @@ jobs:
           dpkg -i ubuntu-keyring_2018.09.18.1-5_all.deb
       - name: Enable backports for build deps on older debian and ubuntu
         run: |
-          echo "APT_TARGET_RELEASE=\"-t $(lsb_release --codename --short)-backports\"" >> ${GITHUB_ENV}
+          echo "APT_TARGET_RELEASE=-t $(lsb_release --codename --short)-backports" >> ${GITHUB_ENV}
         if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial'
       - name: Backport meson on older ubuntu
         run: |
@@ -148,7 +148,7 @@ jobs:
           dpkg -i ubuntu-keyring_2018.09.18.1-5_all.deb
       - name: Enable backports for build deps on older debian and ubuntu
         run: |
-          echo "APT_TARGET_RELEASE=\"-t $(lsb_release --codename --short)-backports\"" >> ${GITHUB_ENV}
+          echo "APT_TARGET_RELEASE=-t $(lsb_release --codename --short)-backports" >> ${GITHUB_ENV}
         if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial'
       - name: Backport meson on older ubuntu
         run: |
@@ -217,7 +217,7 @@ jobs:
           dpkg -i ubuntu-keyring_2018.09.18.1-5_all.deb
       - name: Enable backports for build deps on older debian and ubuntu
         run: |
-          echo "APT_TARGET_RELEASE=\"-t $(lsb_release --codename --short)-backports\"" >> ${GITHUB_ENV}
+          echo "APT_TARGET_RELEASE=-t $(lsb_release --codename --short)-backports" >> ${GITHUB_ENV}
         if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial'
       - name: Backport meson on older ubuntu
         run: |
@@ -286,7 +286,7 @@ jobs:
           dpkg -i ubuntu-keyring_2018.09.18.1-5_all.deb
       - name: Enable backports for build deps on older debian and ubuntu
         run: |
-          echo "APT_TARGET_RELEASE=\"-t $(lsb_release --codename --short)-backports\"" >> ${GITHUB_ENV}
+          echo "APT_TARGET_RELEASE=-t $(lsb_release --codename --short)-backports" >> ${GITHUB_ENV}
         if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial'
       - name: Backport meson on older ubuntu
         run: |
