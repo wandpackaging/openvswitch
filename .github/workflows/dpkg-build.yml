@@ -64,6 +64,7 @@ jobs:
         BUILD_TARGET: ${{ matrix.target }}
         BUILD_ARCH: ${{ matrix.arch }}
         BUILD_PACKAGE: ${{ matrix.package }}
+        APT_TARGET_RELEASE: ""
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
@@ -79,24 +80,23 @@ jobs:
           curl -fLO https://deb.debian.org/debian/pool/main/u/ubuntu-keyring/ubuntu-keyring_2018.09.18.1-5_all.deb
           dpkg -i debian-keyring_2020.12.24_all.deb
           dpkg -i ubuntu-keyring_2018.09.18.1-5_all.deb
-      - name: Backport build tools on xenial
+      - name: Enable backports for build deps on older debian and ubuntu
         run: |
-          apt-get update
-          apt-get install -y -t xenial-backports debhelper ninja-build
-        if: matrix.target == 'ubuntu:xenial'
-      - name: Backport meson
+          echo "APT_TARGET_RELEASE=$(lsb_release --codename --short)-backports" >> ${GITHUB_ENV}
+        if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial'
+      - name: Backport meson on older ubuntu
         run: |
           cd /tmp
           apt-get install -y ninja-build
           curl -fLO https://deb.debian.org/debian/pool/main/m/meson/meson_0.49.2-1_all.deb
           dpkg -i meson_0.49.2-1_all.deb
-        if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial' || matrix.target == 'ubuntu:bionic'
+        if: matrix.target == 'ubuntu:xenial' || matrix.target == 'ubuntu:bionic'
       - name: Build package
         run: |
           cd "./${{ matrix.package }}/"
           ./boot.sh
           cd src
-          mk-build-deps -i -r -t 'apt-get -f -y --force-yes'
+          mk-build-deps -i -r -t 'apt-get ${APT_TARGET_RELEASE} -f -y --force-yes'
           dpkg-buildpackage -b -us -uc -rfakeroot -j4
           dirname=$(echo ${{ matrix.target }} | tr ':' '_')
           package_path="${GITHUB_WORKSPACE}/packages/${dirname}"
@@ -130,6 +130,7 @@ jobs:
         BUILD_TARGET: ${{ matrix.target }}
         BUILD_ARCH: ${{ matrix.arch }}
         BUILD_PACKAGE: ${{ matrix.package }}
+        APT_TARGET_RELEASE: ""
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
@@ -145,18 +146,17 @@ jobs:
           curl -fLO https://deb.debian.org/debian/pool/main/u/ubuntu-keyring/ubuntu-keyring_2018.09.18.1-5_all.deb
           dpkg -i debian-keyring_2020.12.24_all.deb
           dpkg -i ubuntu-keyring_2018.09.18.1-5_all.deb
-      - name: Backport build tools on xenial
+      - name: Enable backports for build deps on older debian and ubuntu
         run: |
-          apt-get update
-          apt-get install -y -t xenial-backports debhelper ninja-build
-        if: matrix.target == 'ubuntu:xenial'
-      - name: Backport meson
+          echo "APT_TARGET_RELEASE=$(lsb_release --codename --short)-backports" >> ${GITHUB_ENV}
+        if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial'
+      - name: Backport meson on older ubuntu
         run: |
           cd /tmp
           apt-get install -y ninja-build
           curl -fLO https://deb.debian.org/debian/pool/main/m/meson/meson_0.49.2-1_all.deb
           dpkg -i meson_0.49.2-1_all.deb
-        if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial' || matrix.target == 'ubuntu:bionic'
+        if: matrix.target == 'ubuntu:xenial' || matrix.target == 'ubuntu:bionic'
       - name: Add openvswitch apt repo
         run: |
           curl -1sLf 'https://dl.cloudsmith.io/public/wand/openvswitch/cfg/setup/bash.deb.sh' | bash
@@ -165,7 +165,7 @@ jobs:
           cd "./${{ matrix.package }}/"
           ./boot.sh
           cd src
-          mk-build-deps -i -r -t 'apt-get -f -y --force-yes'
+          mk-build-deps -i -r -t 'apt-get ${APT_TARGET_RELEASE} -f -y --force-yes'
           dpkg-buildpackage -b -us -uc -rfakeroot -j4
           dirname=$(echo ${{ matrix.target }} | tr ':' '_')
           package_path="${GITHUB_WORKSPACE}/packages/${dirname}"
@@ -199,6 +199,7 @@ jobs:
         BUILD_TARGET: ${{ matrix.target }}
         BUILD_ARCH: ${{ matrix.arch }}
         BUILD_PACKAGE: ${{ matrix.package }}
+        APT_TARGET_RELEASE: ""
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
@@ -214,18 +215,17 @@ jobs:
           curl -fLO https://deb.debian.org/debian/pool/main/u/ubuntu-keyring/ubuntu-keyring_2018.09.18.1-5_all.deb
           dpkg -i debian-keyring_2020.12.24_all.deb
           dpkg -i ubuntu-keyring_2018.09.18.1-5_all.deb
-      - name: Backport build tools on xenial
+      - name: Enable backports for build deps on older debian and ubuntu
         run: |
-          apt-get update
-          apt-get install -y -t xenial-backports debhelper ninja-build
-        if: matrix.target == 'ubuntu:xenial'
-      - name: Backport meson
+          echo "APT_TARGET_RELEASE=$(lsb_release --codename --short)-backports" >> ${GITHUB_ENV}
+        if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial'
+      - name: Backport meson on older ubuntu
         run: |
           cd /tmp
           apt-get install -y ninja-build
           curl -fLO https://deb.debian.org/debian/pool/main/m/meson/meson_0.49.2-1_all.deb
           dpkg -i meson_0.49.2-1_all.deb
-        if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial' || matrix.target == 'ubuntu:bionic'
+        if: matrix.target == 'ubuntu:xenial' || matrix.target == 'ubuntu:bionic'
       - name: Add openvswitch apt repo
         run: |
           curl -1sLf 'https://dl.cloudsmith.io/public/wand/openvswitch/cfg/setup/bash.deb.sh' | bash
@@ -234,7 +234,7 @@ jobs:
           cd "./${{ matrix.package }}/"
           ./boot.sh
           cd src
-          mk-build-deps -i -r -t 'apt-get -f -y --force-yes'
+          mk-build-deps -i -r -t 'apt-get ${APT_TARGET_RELEASE} -f -y --force-yes'
           dpkg-buildpackage -b -us -uc -rfakeroot -j4
           dirname=$(echo ${{ matrix.target }} | tr ':' '_')
           package_path="${GITHUB_WORKSPACE}/packages/${dirname}"
@@ -268,6 +268,7 @@ jobs:
         BUILD_TARGET: ${{ matrix.target }}
         BUILD_ARCH: ${{ matrix.arch }}
         BUILD_PACKAGE: ${{ matrix.package }}
+        APT_TARGET_RELEASE: ""
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
@@ -283,18 +284,17 @@ jobs:
           curl -fLO https://deb.debian.org/debian/pool/main/u/ubuntu-keyring/ubuntu-keyring_2018.09.18.1-5_all.deb
           dpkg -i debian-keyring_2020.12.24_all.deb
           dpkg -i ubuntu-keyring_2018.09.18.1-5_all.deb
-      - name: Backport build tools on xenial
+      - name: Enable backports for build deps on older debian and ubuntu
         run: |
-          apt-get update
-          apt-get install -y -t xenial-backports debhelper ninja-build
-        if: matrix.target == 'ubuntu:xenial'
-      - name: Backport meson
+          echo "APT_TARGET_RELEASE=$(lsb_release --codename --short)-backports" >> ${GITHUB_ENV}
+        if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial'
+      - name: Backport meson on older ubuntu
         run: |
           cd /tmp
           apt-get install -y ninja-build
           curl -fLO https://deb.debian.org/debian/pool/main/m/meson/meson_0.49.2-1_all.deb
           dpkg -i meson_0.49.2-1_all.deb
-        if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial' || matrix.target == 'ubuntu:bionic'
+        if: matrix.target == 'ubuntu:xenial' || matrix.target == 'ubuntu:bionic'
       - name: Add openvswitch apt repo
         run: |
           curl -1sLf 'https://dl.cloudsmith.io/public/wand/openvswitch/cfg/setup/bash.deb.sh' | bash
@@ -303,7 +303,7 @@ jobs:
           cd "./${{ matrix.package }}/"
           ./boot.sh
           cd src
-          mk-build-deps -i -r -t 'apt-get -f -y --force-yes'
+          mk-build-deps -i -r -t 'apt-get ${APT_TARGET_RELEASE} -f -y --force-yes'
           dpkg-buildpackage -b -us -uc -rfakeroot -j4
           dirname=$(echo ${{ matrix.target }} | tr ':' '_')
           package_path="${GITHUB_WORKSPACE}/packages/${dirname}"
