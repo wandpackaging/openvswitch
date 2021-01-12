@@ -94,6 +94,7 @@ jobs:
       - name: Backport meson on older ubuntu
         run: |
           cd /tmp
+          apt-get install -y ninja-build
           curl -fLO https://deb.debian.org/debian/pool/main/m/meson/meson_0.49.2-1_all.deb
           dpkg -i meson_0.49.2-1_all.deb
         if: matrix.target == 'ubuntu:xenial' || matrix.target == 'ubuntu:bionic'
@@ -173,6 +174,7 @@ jobs:
       - name: Backport meson on older ubuntu
         run: |
           cd /tmp
+          apt-get install -y ninja-build
           curl -fLO https://deb.debian.org/debian/pool/main/m/meson/meson_0.49.2-1_all.deb
           dpkg -i meson_0.49.2-1_all.deb
         if: matrix.target == 'ubuntu:xenial' || matrix.target == 'ubuntu:bionic'
@@ -255,6 +257,7 @@ jobs:
       - name: Backport meson on older ubuntu
         run: |
           cd /tmp
+          apt-get install -y ninja-build
           curl -fLO https://deb.debian.org/debian/pool/main/m/meson/meson_0.49.2-1_all.deb
           dpkg -i meson_0.49.2-1_all.deb
         if: matrix.target == 'ubuntu:xenial' || matrix.target == 'ubuntu:bionic'
@@ -337,6 +340,7 @@ jobs:
       - name: Backport meson on older ubuntu
         run: |
           cd /tmp
+          apt-get install -y ninja-build
           curl -fLO https://deb.debian.org/debian/pool/main/m/meson/meson_0.49.2-1_all.deb
           dpkg -i meson_0.49.2-1_all.deb
         if: matrix.target == 'ubuntu:xenial' || matrix.target == 'ubuntu:bionic'
