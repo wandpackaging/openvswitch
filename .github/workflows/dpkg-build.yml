@@ -100,7 +100,7 @@ jobs:
         if: matrix.target == 'ubuntu:xenial' || matrix.target == 'ubuntu:bionic'
       - name: Backport debhelper on stretch
         run: |
-          apt-get -t stretch-backports install debhelper quilt
+          apt-get -t stretch-backports install -y debhelper quilt
         if: matrix.target == 'debian:stretch'
       - name: Backport debhelper on xenial
         run: |
@@ -187,7 +187,7 @@ jobs:
           curl -1sLf 'https://dl.cloudsmith.io/public/wand/openvswitch/cfg/setup/bash.deb.sh' | bash
       - name: Backport debhelper on stretch
         run: |
-          apt-get -t stretch-backports install debhelper quilt
+          apt-get -t stretch-backports install -y debhelper quilt
         if: matrix.target == 'debian:stretch'
       - name: Backport debhelper on xenial
         run: |
@@ -274,7 +274,7 @@ jobs:
           curl -1sLf 'https://dl.cloudsmith.io/public/wand/openvswitch/cfg/setup/bash.deb.sh' | bash
       - name: Backport debhelper on stretch
         run: |
-          apt-get -t stretch-backports install debhelper quilt
+          apt-get -t stretch-backports install -y debhelper quilt
         if: matrix.target == 'debian:stretch'
       - name: Backport debhelper on xenial
         run: |
@@ -361,7 +361,7 @@ jobs:
           curl -1sLf 'https://dl.cloudsmith.io/public/wand/openvswitch/cfg/setup/bash.deb.sh' | bash
       - name: Backport debhelper on stretch
         run: |
-          apt-get -t stretch-backports install debhelper quilt
+          apt-get -t stretch-backports install -y debhelper quilt
         if: matrix.target == 'debian:stretch'
       - name: Backport debhelper on xenial
         run: |
