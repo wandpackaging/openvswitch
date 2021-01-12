@@ -57,6 +57,7 @@ jobs:
         include:
           - package: "libisal"
             target: "ubuntu:xenial"
+            arch: "amd64"
         exclude:
           - target: "debian:bullseye"
     env:
