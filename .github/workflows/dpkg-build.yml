@@ -64,7 +64,6 @@ jobs:
         BUILD_TARGET: ${{ matrix.target }}
         BUILD_ARCH: ${{ matrix.arch }}
         BUILD_PACKAGE: ${{ matrix.package }}
-        APT_TARGET_RELEASE: ""
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
@@ -85,14 +84,13 @@ jobs:
           echo "deb http://deb.debian.org/debian stretch-backports main" >> /etc/apt/sources.list
           apt-get update
         if: matrix.target == 'debian:stretch'
-      - name: Enable backports for build deps on older debian and ubuntu
+      - name: Backport ninja-build on xenial
         run: |
-          echo "APT_TARGET_RELEASE=-t $(lsb_release --codename --short)-backports" >> ${GITHUB_ENV}
-        if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial' || matrix.target == 'ubuntu:bionic'
+          apt-get -t xenial-backports install -y ninja-build
+        if: matrix.target == 'ubuntu:xenial'
       - name: Backport meson on older ubuntu
         run: |
           cd /tmp
-          apt-get ${APT_TARGET_RELEASE} install -y ninja-build
           curl -fLO https://deb.debian.org/debian/pool/main/m/meson/meson_0.49.2-1_all.deb
           dpkg -i meson_0.49.2-1_all.deb
         if: matrix.target == 'ubuntu:xenial' || matrix.target == 'ubuntu:bionic'
@@ -111,7 +109,7 @@ jobs:
           cd "./${{ matrix.package }}/"
           ./boot.sh
           cd src
-          mk-build-deps -i -r -t "apt-get ${APT_TARGET_RELEASE} -f -y --force-yes"
+          mk-build-deps -i -r -t "apt-get -f -y --force-yes"
           dpkg-buildpackage -b -us -uc -rfakeroot -j4
           dirname=$(echo ${{ matrix.target }} | tr ':' '_')
           package_path="${GITHUB_WORKSPACE}/packages/${dirname}"
@@ -145,7 +143,6 @@ jobs:
         BUILD_TARGET: ${{ matrix.target }}
         BUILD_ARCH: ${{ matrix.arch }}
         BUILD_PACKAGE: ${{ matrix.package }}
-        APT_TARGET_RELEASE: ""
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
@@ -166,14 +163,13 @@ jobs:
           echo "deb http://deb.debian.org/debian stretch-backports main" >> /etc/apt/sources.list
           apt-get update
         if: matrix.target == 'debian:stretch'
-      - name: Enable backports for build deps on older debian and ubuntu
+      - name: Backport ninja-build on xenial
         run: |
-          echo "APT_TARGET_RELEASE=-t $(lsb_release --codename --short)-backports" >> ${GITHUB_ENV}
-        if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial'
+          apt-get -t xenial-backports install -y ninja-build
+        if: matrix.target == 'ubuntu:xenial'
       - name: Backport meson on older ubuntu
         run: |
           cd /tmp
-          apt-get ${APT_TARGET_RELEASE} install -y ninja-build
           curl -fLO https://deb.debian.org/debian/pool/main/m/meson/meson_0.49.2-1_all.deb
           dpkg -i meson_0.49.2-1_all.deb
         if: matrix.target == 'ubuntu:xenial' || matrix.target == 'ubuntu:bionic'
@@ -195,7 +191,7 @@ jobs:
           cd "./${{ matrix.package }}/"
           ./boot.sh
           cd src
-          mk-build-deps -i -r -t "apt-get ${APT_TARGET_RELEASE} -f -y --force-yes"
+          mk-build-deps -i -r -t "apt-get -f -y --force-yes"
           dpkg-buildpackage -b -us -uc -rfakeroot -j4
           dirname=$(echo ${{ matrix.target }} | tr ':' '_')
           package_path="${GITHUB_WORKSPACE}/packages/${dirname}"
@@ -229,7 +225,6 @@ jobs:
         BUILD_TARGET: ${{ matrix.target }}
         BUILD_ARCH: ${{ matrix.arch }}
         BUILD_PACKAGE: ${{ matrix.package }}
-        APT_TARGET_RELEASE: ""
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
@@ -250,14 +245,13 @@ jobs:
           echo "deb http://deb.debian.org/debian stretch-backports main" >> /etc/apt/sources.list
           apt-get update
         if: matrix.target == 'debian:stretch'
-      - name: Enable backports for build deps on older debian and ubuntu
+      - name: Backport ninja-build on xenial
         run: |
-          echo "APT_TARGET_RELEASE=-t $(lsb_release --codename --short)-backports" >> ${GITHUB_ENV}
-        if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial'
+          apt-get -t xenial-backports install -y ninja-build
+        if: matrix.target == 'ubuntu:xenial'
       - name: Backport meson on older ubuntu
         run: |
           cd /tmp
-          apt-get ${APT_TARGET_RELEASE} install -y ninja-build
           curl -fLO https://deb.debian.org/debian/pool/main/m/meson/meson_0.49.2-1_all.deb
           dpkg -i meson_0.49.2-1_all.deb
         if: matrix.target == 'ubuntu:xenial' || matrix.target == 'ubuntu:bionic'
@@ -279,7 +273,7 @@ jobs:
           cd "./${{ matrix.package }}/"
           ./boot.sh
           cd src
-          mk-build-deps -i -r -t "apt-get ${APT_TARGET_RELEASE} -f -y --force-yes"
+          mk-build-deps -i -r -t "apt-get -f -y --force-yes"
           dpkg-buildpackage -b -us -uc -rfakeroot -j4
           dirname=$(echo ${{ matrix.target }} | tr ':' '_')
           package_path="${GITHUB_WORKSPACE}/packages/${dirname}"
@@ -313,7 +307,6 @@ jobs:
         BUILD_TARGET: ${{ matrix.target }}
         BUILD_ARCH: ${{ matrix.arch }}
         BUILD_PACKAGE: ${{ matrix.package }}
-        APT_TARGET_RELEASE: ""
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
@@ -334,14 +327,13 @@ jobs:
           echo "deb http://deb.debian.org/debian stretch-backports main" >> /etc/apt/sources.list
           apt-get update
         if: matrix.target == 'debian:stretch'
-      - name: Enable backports for build deps on older debian and ubuntu
+      - name: Backport ninja-build on xenial
         run: |
-          echo "APT_TARGET_RELEASE=-t $(lsb_release --codename --short)-backports" >> ${GITHUB_ENV}
-        if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial'
+          apt-get -t xenial-backports install -y ninja-build
+        if: matrix.target == 'ubuntu:xenial'
       - name: Backport meson on older ubuntu
         run: |
           cd /tmp
-          apt-get ${APT_TARGET_RELEASE} install -y ninja-build
           curl -fLO https://deb.debian.org/debian/pool/main/m/meson/meson_0.49.2-1_all.deb
           dpkg -i meson_0.49.2-1_all.deb
         if: matrix.target == 'ubuntu:xenial' || matrix.target == 'ubuntu:bionic'
@@ -363,7 +355,7 @@ jobs:
           cd "./${{ matrix.package }}/"
           ./boot.sh
           cd src
-          mk-build-deps -i -r -t "apt-get ${APT_TARGET_RELEASE} -f -y --force-yes"
+          mk-build-deps -i -r -t "apt-get -f -y --force-yes"
           dpkg-buildpackage -b -us -uc -rfakeroot -j4
           dirname=$(echo ${{ matrix.target }} | tr ':' '_')
           package_path="${GITHUB_WORKSPACE}/packages/${dirname}"
