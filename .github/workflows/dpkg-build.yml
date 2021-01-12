@@ -98,6 +98,10 @@ jobs:
           curl -fLO https://deb.debian.org/debian/pool/main/m/meson/meson_0.49.2-1_all.deb
           dpkg -i meson_0.49.2-1_all.deb
         if: matrix.target == 'ubuntu:xenial' || matrix.target == 'ubuntu:bionic'
+      - name: Backport debhelper on stretch
+        run: |
+          apt-get -t stretch-backports install debhelper quilt
+        if: matrix.target == 'debian:stretch'
       - name: Backport debhelper on xenial
         run: |
           apt-get install -y software-properties-common gcc cpp g++ dwz autotools-dev autoconf automake autopoint libtool
@@ -181,6 +185,10 @@ jobs:
       - name: Add openvswitch apt repo
         run: |
           curl -1sLf 'https://dl.cloudsmith.io/public/wand/openvswitch/cfg/setup/bash.deb.sh' | bash
+      - name: Backport debhelper on stretch
+        run: |
+          apt-get -t stretch-backports install debhelper quilt
+        if: matrix.target == 'debian:stretch'
       - name: Backport debhelper on xenial
         run: |
           apt-get install -y software-properties-common gcc cpp g++ dwz autotools-dev autoconf automake autopoint libtool
@@ -264,6 +272,10 @@ jobs:
       - name: Add openvswitch apt repo
         run: |
           curl -1sLf 'https://dl.cloudsmith.io/public/wand/openvswitch/cfg/setup/bash.deb.sh' | bash
+      - name: Backport debhelper on stretch
+        run: |
+          apt-get -t stretch-backports install debhelper quilt
+        if: matrix.target == 'debian:stretch'
       - name: Backport debhelper on xenial
         run: |
           apt-get install -y software-properties-common gcc cpp g++ dwz autotools-dev autoconf automake autopoint libtool
@@ -347,6 +359,10 @@ jobs:
       - name: Add openvswitch apt repo
         run: |
           curl -1sLf 'https://dl.cloudsmith.io/public/wand/openvswitch/cfg/setup/bash.deb.sh' | bash
+      - name: Backport debhelper on stretch
+        run: |
+          apt-get -t stretch-backports install debhelper quilt
+        if: matrix.target == 'debian:stretch'
       - name: Backport debhelper on xenial
         run: |
           apt-get install -y software-properties-common gcc cpp g++ dwz autotools-dev autoconf automake autopoint libtool
