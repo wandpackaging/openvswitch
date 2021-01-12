@@ -51,10 +51,12 @@ jobs:
           - nasm
           - rdma-core
           - libbpf
-          - libisal
         target: ${{ fromJson(needs.build-matrix.outputs.matrix) }}
         arch:
           - amd64
+        include:
+          - package: "libisal"
+            target: "ubuntu:xenial"
         exclude:
           - target: "debian:bullseye"
     env:
