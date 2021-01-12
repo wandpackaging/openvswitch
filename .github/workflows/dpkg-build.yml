@@ -83,7 +83,7 @@ jobs:
       - name: Enable backports for build deps on older debian and ubuntu
         run: |
           echo "APT_TARGET_RELEASE=-t $(lsb_release --codename --short)-backports" >> ${GITHUB_ENV}
-        if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial'
+        if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial' || matrix.target == 'ubuntu:bionic'
       - name: Backport meson on older ubuntu
         run: |
           cd /tmp
