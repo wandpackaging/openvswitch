@@ -58,6 +58,9 @@ jobs:
           - package: "libisal"
             target: "ubuntu:xenial"
             arch: "amd64"
+          - package: "device-tree-compiler"
+            target: "ubuntu:xenial"
+            arch: "amd64"
         exclude:
           - target: "debian:bullseye"
     env:
