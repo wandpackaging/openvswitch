@@ -15,5 +15,5 @@ fi
 debhelper_version=$(dpkg-query --showformat='${Version}' --show debhelper)
 
 if dpkg --compare-versions "${debhelper_version}" lt 13; then
-    sed -i 's/debhelper-compat (= 13)/debhelper-compat (= 12)/' src/debian/control
+    sed -i 's/debhelper-compat (= 13)/debhelper-compat (= 11)/' src/debian/control
 fi
