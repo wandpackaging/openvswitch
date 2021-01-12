@@ -98,9 +98,9 @@ jobs:
         if: matrix.target == 'ubuntu:xenial' || matrix.target == 'ubuntu:bionic'
       - name: Backport debhelper on xenial
         run: |
-          apt-get install -y software-properties-common gcc cpp g++
-          add-apt-repository ppa:savoury1/build-tools
-          add-apt-repository ppa:savoury1/backports
+          apt-get install -y software-properties-common gcc cpp g++ dwz autotools-dev autoconf automake autopoint libtool
+          add-apt-repository -y ppa:savoury1/build-tools
+          add-apt-repository -y ppa:savoury1/backports
           apt-get update
           apt-get install -y debhelper quilt
           rm /etc/apt/sources.list.d/savoury1-ubuntu-*.list
@@ -182,9 +182,9 @@ jobs:
           curl -1sLf 'https://dl.cloudsmith.io/public/wand/openvswitch/cfg/setup/bash.deb.sh' | bash
       - name: Backport debhelper on xenial
         run: |
-          apt-get install -y software-properties-common gcc cpp g++
-          add-apt-repository ppa:savoury1/build-tools
-          add-apt-repository ppa:savoury1/backports
+          apt-get install -y software-properties-common gcc cpp g++ dwz autotools-dev autoconf automake autopoint libtool
+          add-apt-repository -y ppa:savoury1/build-tools
+          add-apt-repository -y ppa:savoury1/backports
           apt-get update
           apt-get install -y debhelper quilt
           rm /etc/apt/sources.list.d/savoury1-ubuntu-*.list
@@ -266,9 +266,9 @@ jobs:
           curl -1sLf 'https://dl.cloudsmith.io/public/wand/openvswitch/cfg/setup/bash.deb.sh' | bash
       - name: Backport debhelper on xenial
         run: |
-          apt-get install -y software-properties-common gcc cpp g++
-          add-apt-repository ppa:savoury1/build-tools
-          add-apt-repository ppa:savoury1/backports
+          apt-get install -y software-properties-common gcc cpp g++ dwz autotools-dev autoconf automake autopoint libtool
+          add-apt-repository -y ppa:savoury1/build-tools
+          add-apt-repository -y ppa:savoury1/backports
           apt-get update
           apt-get install -y debhelper quilt
           rm /etc/apt/sources.list.d/savoury1-ubuntu-*.list
@@ -350,9 +350,9 @@ jobs:
           curl -1sLf 'https://dl.cloudsmith.io/public/wand/openvswitch/cfg/setup/bash.deb.sh' | bash
       - name: Backport debhelper on xenial
         run: |
-          apt-get install -y software-properties-common gcc cpp g++
-          add-apt-repository ppa:savoury1/build-tools
-          add-apt-repository ppa:savoury1/backports
+          apt-get install -y software-properties-common gcc cpp g++ dwz autotools-dev autoconf automake autopoint libtool
+          add-apt-repository -y ppa:savoury1/build-tools
+          add-apt-repository -y ppa:savoury1/backports
           apt-get update
           apt-get install -y debhelper quilt
           rm /etc/apt/sources.list.d/savoury1-ubuntu-*.list
