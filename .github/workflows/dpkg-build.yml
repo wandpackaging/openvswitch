@@ -91,6 +91,17 @@ jobs:
           curl -fLO https://deb.debian.org/debian/pool/main/m/meson/meson_0.49.2-1_all.deb
           dpkg -i meson_0.49.2-1_all.deb
         if: matrix.target == 'ubuntu:xenial' || matrix.target == 'ubuntu:bionic'
+      - name: Backport debhelper on xenial
+        run: |
+          apt-get update
+          apt-get install -y software-properties-common gcc cpp g++
+          add-apt-repository ppa:savoury1/build-tools
+          add-apt-repository ppa:savoury1/backports
+          apt-get update
+          apt-get install -y debhelper quilt
+          rm /etc/apt/sources.list.d/savoury1-ubuntu-*.list
+          apt-get update
+        if: matrix.target == 'ubuntu:xenial'
       - name: Build package
         run: |
           cd "./${{ matrix.package }}/"
@@ -160,6 +171,17 @@ jobs:
       - name: Add openvswitch apt repo
         run: |
           curl -1sLf 'https://dl.cloudsmith.io/public/wand/openvswitch/cfg/setup/bash.deb.sh' | bash
+      - name: Backport debhelper on xenial
+        run: |
+          apt-get update
+          apt-get install -y software-properties-common gcc cpp g++
+          add-apt-repository ppa:savoury1/build-tools
+          add-apt-repository ppa:savoury1/backports
+          apt-get update
+          apt-get install -y debhelper quilt
+          rm /etc/apt/sources.list.d/savoury1-ubuntu-*.list
+          apt-get update
+        if: matrix.target == 'ubuntu:xenial'
       - name: Build package
         run: |
           cd "./${{ matrix.package }}/"
@@ -229,6 +251,17 @@ jobs:
       - name: Add openvswitch apt repo
         run: |
           curl -1sLf 'https://dl.cloudsmith.io/public/wand/openvswitch/cfg/setup/bash.deb.sh' | bash
+      - name: Backport debhelper on xenial
+        run: |
+          apt-get update
+          apt-get install -y software-properties-common gcc cpp g++
+          add-apt-repository ppa:savoury1/build-tools
+          add-apt-repository ppa:savoury1/backports
+          apt-get update
+          apt-get install -y debhelper quilt
+          rm /etc/apt/sources.list.d/savoury1-ubuntu-*.list
+          apt-get update
+        if: matrix.target == 'ubuntu:xenial'
       - name: Build package
         run: |
           cd "./${{ matrix.package }}/"
@@ -298,6 +331,17 @@ jobs:
       - name: Add openvswitch apt repo
         run: |
           curl -1sLf 'https://dl.cloudsmith.io/public/wand/openvswitch/cfg/setup/bash.deb.sh' | bash
+      - name: Backport debhelper on xenial
+        run: |
+          apt-get update
+          apt-get install -y software-properties-common gcc cpp g++
+          add-apt-repository ppa:savoury1/build-tools
+          add-apt-repository ppa:savoury1/backports
+          apt-get update
+          apt-get install -y debhelper quilt
+          rm /etc/apt/sources.list.d/savoury1-ubuntu-*.list
+          apt-get update
+        if: matrix.target == 'ubuntu:xenial'
       - name: Build package
         run: |
           cd "./${{ matrix.package }}/"
