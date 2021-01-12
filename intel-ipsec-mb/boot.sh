@@ -2,9 +2,9 @@
 
 set -euo pipefail
 
-curl -L -O https://deb.debian.org/debian/pool/main/i/intel-ipsec-mb/intel-ipsec-mb_0.55-1.dsc
-curl -L -O https://deb.debian.org/debian/pool/main/i/intel-ipsec-mb/intel-ipsec-mb_0.55.orig.tar.xz
-curl -L -O https://deb.debian.org/debian/pool/main/i/intel-ipsec-mb/intel-ipsec-mb_0.55-1.debian.tar.xz
+curl -fLO https://deb.debian.org/debian/pool/main/i/intel-ipsec-mb/intel-ipsec-mb_0.55-1.dsc
+curl -fLO https://deb.debian.org/debian/pool/main/i/intel-ipsec-mb/intel-ipsec-mb_0.55.orig.tar.xz
+curl -fLO https://deb.debian.org/debian/pool/main/i/intel-ipsec-mb/intel-ipsec-mb_0.55-1.debian.tar.xz
 
 dpkg-source --require-valid-signature -x intel-ipsec-mb_0.55-1.dsc src
 

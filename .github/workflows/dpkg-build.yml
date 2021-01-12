@@ -74,8 +74,8 @@ jobs:
           apt-get -y install git devscripts dpkg-dev debhelper equivs
       - name: Backport gpg keyrings
         run: |
-          curl -L -O https://deb.debian.org/debian/pool/main/d/debian-keyring/debian-keyring_2020.12.24_all.deb
-          curl -L -O https://deb.debian.org/debian/pool/main/u/ubuntu-keyring/ubuntu-keyring_2018.09.18.1-5_all.deb
+          curl -fLO https://deb.debian.org/debian/pool/main/d/debian-keyring/debian-keyring_2020.12.24_all.deb
+          curl -fLO https://deb.debian.org/debian/pool/main/u/ubuntu-keyring/ubuntu-keyring_2018.09.18.1-5_all.deb
           dpkg -i debian-keyring_2020.12.24_all.deb
           dpkg -i ubuntu-keyring_2018.09.18.1-5_all.deb
       - name: Backport build tools on xenial
@@ -86,7 +86,7 @@ jobs:
       - name: Backport meson
         run: |
           apt-get install -y ninja-build
-          curl -L -O https://deb.debian.org/debian/pool/main/m/meson/meson_0.49.2-1_all.deb
+          curl -fLO https://deb.debian.org/debian/pool/main/m/meson/meson_0.49.2-1_all.deb
           dpkg -i meson_0.49.2-1_all.deb
         if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial' || matrix.target == 'ubuntu:bionic'
       - name: Build package
@@ -138,8 +138,8 @@ jobs:
           apt-get -y install git devscripts dpkg-dev debhelper equivs
       - name: Backport gpg keyrings
         run: |
-          curl -L -O https://deb.debian.org/debian/pool/main/d/debian-keyring/debian-keyring_2020.12.24_all.deb
-          curl -L -O https://deb.debian.org/debian/pool/main/u/ubuntu-keyring/ubuntu-keyring_2018.09.18.1-5_all.deb
+          curl -fLO https://deb.debian.org/debian/pool/main/d/debian-keyring/debian-keyring_2020.12.24_all.deb
+          curl -fLO https://deb.debian.org/debian/pool/main/u/ubuntu-keyring/ubuntu-keyring_2018.09.18.1-5_all.deb
           dpkg -i debian-keyring_2020.12.24_all.deb
           dpkg -i ubuntu-keyring_2018.09.18.1-5_all.deb
       - name: Backport build tools on xenial
@@ -150,7 +150,7 @@ jobs:
       - name: Backport meson
         run: |
           apt-get install -y ninja-build
-          curl -L -O https://deb.debian.org/debian/pool/main/m/meson/meson_0.49.2-1_all.deb
+          curl -fLO https://deb.debian.org/debian/pool/main/m/meson/meson_0.49.2-1_all.deb
           dpkg -i meson_0.49.2-1_all.deb
         if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial' || matrix.target == 'ubuntu:bionic'
       - name: Add openvswitch apt repo
@@ -205,8 +205,8 @@ jobs:
           apt-get -y install git devscripts dpkg-dev debhelper equivs
       - name: Backport gpg keyrings
         run: |
-          curl -L -O https://deb.debian.org/debian/pool/main/d/debian-keyring/debian-keyring_2020.12.24_all.deb
-          curl -L -O https://deb.debian.org/debian/pool/main/u/ubuntu-keyring/ubuntu-keyring_2018.09.18.1-5_all.deb
+          curl -fLO https://deb.debian.org/debian/pool/main/d/debian-keyring/debian-keyring_2020.12.24_all.deb
+          curl -fLO https://deb.debian.org/debian/pool/main/u/ubuntu-keyring/ubuntu-keyring_2018.09.18.1-5_all.deb
           dpkg -i debian-keyring_2020.12.24_all.deb
           dpkg -i ubuntu-keyring_2018.09.18.1-5_all.deb
       - name: Backport build tools on xenial
@@ -217,7 +217,7 @@ jobs:
       - name: Backport meson
         run: |
           apt-get install -y ninja-build
-          curl -L -O https://deb.debian.org/debian/pool/main/m/meson/meson_0.49.2-1_all.deb
+          curl -fLO https://deb.debian.org/debian/pool/main/m/meson/meson_0.49.2-1_all.deb
           dpkg -i meson_0.49.2-1_all.deb
         if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial' || matrix.target == 'ubuntu:bionic'
       - name: Add openvswitch apt repo
@@ -272,8 +272,8 @@ jobs:
           apt-get -y install git devscripts dpkg-dev debhelper equivs
       - name: Backport gpg keyrings
         run: |
-          curl -L -O https://deb.debian.org/debian/pool/main/d/debian-keyring/debian-keyring_2020.12.24_all.deb
-          curl -L -O https://deb.debian.org/debian/pool/main/u/ubuntu-keyring/ubuntu-keyring_2018.09.18.1-5_all.deb
+          curl -fLO https://deb.debian.org/debian/pool/main/d/debian-keyring/debian-keyring_2020.12.24_all.deb
+          curl -fLO https://deb.debian.org/debian/pool/main/u/ubuntu-keyring/ubuntu-keyring_2018.09.18.1-5_all.deb
           dpkg -i debian-keyring_2020.12.24_all.deb
           dpkg -i ubuntu-keyring_2018.09.18.1-5_all.deb
       - name: Backport build tools on xenial
@@ -284,7 +284,7 @@ jobs:
       - name: Backport meson
         run: |
           apt-get install -y ninja-build
-          curl -L -O https://deb.debian.org/debian/pool/main/m/meson/meson_0.49.2-1_all.deb
+          curl -fLO https://deb.debian.org/debian/pool/main/m/meson/meson_0.49.2-1_all.deb
           dpkg -i meson_0.49.2-1_all.deb
         if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial' || matrix.target == 'ubuntu:bionic'
       - name: Add openvswitch apt repo
