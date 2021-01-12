@@ -96,7 +96,7 @@ jobs:
           cd "./${{ matrix.package }}/"
           ./boot.sh
           cd src
-          mk-build-deps -i -r -t 'apt-get ${APT_TARGET_RELEASE} -f -y --force-yes'
+          mk-build-deps -i -r -t "apt-get ${APT_TARGET_RELEASE} -f -y --force-yes"
           dpkg-buildpackage -b -us -uc -rfakeroot -j4
           dirname=$(echo ${{ matrix.target }} | tr ':' '_')
           package_path="${GITHUB_WORKSPACE}/packages/${dirname}"
@@ -165,7 +165,7 @@ jobs:
           cd "./${{ matrix.package }}/"
           ./boot.sh
           cd src
-          mk-build-deps -i -r -t 'apt-get ${APT_TARGET_RELEASE} -f -y --force-yes'
+          mk-build-deps -i -r -t "apt-get ${APT_TARGET_RELEASE} -f -y --force-yes"
           dpkg-buildpackage -b -us -uc -rfakeroot -j4
           dirname=$(echo ${{ matrix.target }} | tr ':' '_')
           package_path="${GITHUB_WORKSPACE}/packages/${dirname}"
@@ -234,7 +234,7 @@ jobs:
           cd "./${{ matrix.package }}/"
           ./boot.sh
           cd src
-          mk-build-deps -i -r -t 'apt-get ${APT_TARGET_RELEASE} -f -y --force-yes'
+          mk-build-deps -i -r -t "apt-get ${APT_TARGET_RELEASE} -f -y --force-yes"
           dpkg-buildpackage -b -us -uc -rfakeroot -j4
           dirname=$(echo ${{ matrix.target }} | tr ':' '_')
           package_path="${GITHUB_WORKSPACE}/packages/${dirname}"
@@ -303,7 +303,7 @@ jobs:
           cd "./${{ matrix.package }}/"
           ./boot.sh
           cd src
-          mk-build-deps -i -r -t 'apt-get ${APT_TARGET_RELEASE} -f -y --force-yes'
+          mk-build-deps -i -r -t "apt-get ${APT_TARGET_RELEASE} -f -y --force-yes"
           dpkg-buildpackage -b -us -uc -rfakeroot -j4
           dirname=$(echo ${{ matrix.target }} | tr ':' '_')
           package_path="${GITHUB_WORKSPACE}/packages/${dirname}"
