@@ -82,7 +82,7 @@ jobs:
           curl -fLO https://deb.debian.org/debian/pool/main/u/ubuntu-keyring/ubuntu-keyring_2018.09.18.1-5_all.deb
           dpkg -i debian-keyring_2020.12.24_all.deb
           dpkg -i ubuntu-keyring_2018.09.18.1-5_all.deb
-      - name: Add debhelper ppa on xenial and stretch
+      - name: Backport debhelper on xenial and stretch
         run: |
           apt-get install -y gnupg
           apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1A498FA2
@@ -90,6 +90,7 @@ jobs:
           apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 5F2EA337
           echo "deb http://ppa.launchpad.net/litenstein/debhelper12-xenial/ubuntu xenial main" > /etc/apt/sources.list.d/litenstein-ubuntu-debhelper12-xenial-xenial.list
           apt-get update
+          apt-get install debhelper
         if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial'
       - name: Backport ninja-build on xenial
         run: |
@@ -156,7 +157,7 @@ jobs:
           curl -fLO https://deb.debian.org/debian/pool/main/u/ubuntu-keyring/ubuntu-keyring_2018.09.18.1-5_all.deb
           dpkg -i debian-keyring_2020.12.24_all.deb
           dpkg -i ubuntu-keyring_2018.09.18.1-5_all.deb
-      - name: Add debhelper ppa on xenial and stretch
+      - name: Backport debhelper on xenial and stretch
         run: |
           apt-get install -y gnupg
           apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1A498FA2
@@ -164,6 +165,7 @@ jobs:
           apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 5F2EA337
           echo "deb http://ppa.launchpad.net/litenstein/debhelper12-xenial/ubuntu xenial main" > /etc/apt/sources.list.d/litenstein-ubuntu-debhelper12-xenial-xenial.list
           apt-get update
+          apt-get install debhelper
         if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial'
       - name: Backport ninja-build on xenial
         run: |
@@ -233,7 +235,7 @@ jobs:
           curl -fLO https://deb.debian.org/debian/pool/main/u/ubuntu-keyring/ubuntu-keyring_2018.09.18.1-5_all.deb
           dpkg -i debian-keyring_2020.12.24_all.deb
           dpkg -i ubuntu-keyring_2018.09.18.1-5_all.deb
-      - name: Add debhelper ppa on xenial and stretch
+      - name: Backport debhelper on xenial and stretch
         run: |
           apt-get install -y gnupg
           apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1A498FA2
@@ -241,6 +243,7 @@ jobs:
           apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 5F2EA337
           echo "deb http://ppa.launchpad.net/litenstein/debhelper12-xenial/ubuntu xenial main" > /etc/apt/sources.list.d/litenstein-ubuntu-debhelper12-xenial-xenial.list
           apt-get update
+          apt-get install debhelper
         if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial'
       - name: Backport ninja-build on xenial
         run: |
@@ -310,7 +313,7 @@ jobs:
           curl -fLO https://deb.debian.org/debian/pool/main/u/ubuntu-keyring/ubuntu-keyring_2018.09.18.1-5_all.deb
           dpkg -i debian-keyring_2020.12.24_all.deb
           dpkg -i ubuntu-keyring_2018.09.18.1-5_all.deb
-      - name: Add debhelper ppa on xenial and stretch
+      - name: Backport debhelper on xenial and stretch
         run: |
           apt-get install -y gnupg
           apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1A498FA2
@@ -318,6 +321,7 @@ jobs:
           apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 5F2EA337
           echo "deb http://ppa.launchpad.net/litenstein/debhelper12-xenial/ubuntu xenial main" > /etc/apt/sources.list.d/litenstein-ubuntu-debhelper12-xenial-xenial.list
           apt-get update
+          apt-get install debhelper
         if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial'
       - name: Backport ninja-build on xenial
         run: |
