@@ -82,31 +82,25 @@ jobs:
           curl -fLO https://deb.debian.org/debian/pool/main/u/ubuntu-keyring/ubuntu-keyring_2018.09.18.1-5_all.deb
           dpkg -i debian-keyring_2020.12.24_all.deb
           dpkg -i ubuntu-keyring_2018.09.18.1-5_all.deb
-      - name: Backport debhelper on xenial and stretch
+      - name: Backport build tools on xenial and stretch
         run: |
           apt-get install -y gnupg
-          apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1A498FA2
-          echo "deb http://ppa.launchpad.net/andrew-fuller/cmake/ubuntu xenial main" > /etc/apt/sources.list.d/andrew-fuller-ubuntu-cmake-xenial.list
-          apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 5F2EA337
-          echo "deb http://ppa.launchpad.net/litenstein/debhelper12-xenial/ubuntu xenial main" > /etc/apt/sources.list.d/litenstein-ubuntu-debhelper12-xenial-xenial.list
+          apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 8B65E182
+          echo "deb http://ppa.launchpad.net/spvkgn/build-dep/ubuntu xenial main" > /etc/apt/sources.list.d/spvkgn-ubuntu-build-dep-xenial.list
           apt-get update
-          apt-get install -y debhelper
+          apt-get install -y debhelper dpkg-dev meson ninja-build
         if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial'
       - name: Backport debhelper on bionic
         run: |
           apt-get -t bionic-backports install -y debhelper
         if: matrix.target == 'ubuntu:bionic'
-      - name: Backport ninja-build on xenial
-        run: |
-          apt-get -t xenial-backports install -y ninja-build
-        if: matrix.target == 'ubuntu:xenial'
-      - name: Backport meson on older ubuntu
+      - name: Backport meson on bionic
         run: |
           cd /tmp
           apt-get install -y ninja-build
           curl -fLO https://deb.debian.org/debian/pool/main/m/meson/meson_0.49.2-1_all.deb
           dpkg -i meson_0.49.2-1_all.deb
-        if: matrix.target == 'ubuntu:xenial' || matrix.target == 'ubuntu:bionic'
+        if: matrix.target == 'ubuntu:bionic'
       - name: Build package
         run: |
           cd "./${{ matrix.package }}/"
@@ -161,31 +155,25 @@ jobs:
           curl -fLO https://deb.debian.org/debian/pool/main/u/ubuntu-keyring/ubuntu-keyring_2018.09.18.1-5_all.deb
           dpkg -i debian-keyring_2020.12.24_all.deb
           dpkg -i ubuntu-keyring_2018.09.18.1-5_all.deb
-      - name: Backport debhelper on xenial and stretch
+      - name: Backport build tools on xenial and stretch
         run: |
           apt-get install -y gnupg
-          apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1A498FA2
-          echo "deb http://ppa.launchpad.net/andrew-fuller/cmake/ubuntu xenial main" > /etc/apt/sources.list.d/andrew-fuller-ubuntu-cmake-xenial.list
-          apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 5F2EA337
-          echo "deb http://ppa.launchpad.net/litenstein/debhelper12-xenial/ubuntu xenial main" > /etc/apt/sources.list.d/litenstein-ubuntu-debhelper12-xenial-xenial.list
+          apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 8B65E182
+          echo "deb http://ppa.launchpad.net/spvkgn/build-dep/ubuntu xenial main" > /etc/apt/sources.list.d/spvkgn-ubuntu-build-dep-xenial.list
           apt-get update
-          apt-get install -y debhelper
+          apt-get install -y debhelper dpkg-dev meson ninja-build
         if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial'
       - name: Backport debhelper on bionic
         run: |
           apt-get -t bionic-backports install -y debhelper
         if: matrix.target == 'ubuntu:bionic'
-      - name: Backport ninja-build on xenial
-        run: |
-          apt-get -t xenial-backports install -y ninja-build
-        if: matrix.target == 'ubuntu:xenial'
-      - name: Backport meson on older ubuntu
+      - name: Backport meson on bionic
         run: |
           cd /tmp
           apt-get install -y ninja-build
           curl -fLO https://deb.debian.org/debian/pool/main/m/meson/meson_0.49.2-1_all.deb
           dpkg -i meson_0.49.2-1_all.deb
-        if: matrix.target == 'ubuntu:xenial' || matrix.target == 'ubuntu:bionic'
+        if: matrix.target == 'ubuntu:bionic'
       - name: Add openvswitch apt repo
         run: |
           curl -1sLf 'https://dl.cloudsmith.io/public/wand/openvswitch/cfg/setup/bash.deb.sh' | bash
@@ -243,31 +231,39 @@ jobs:
           curl -fLO https://deb.debian.org/debian/pool/main/u/ubuntu-keyring/ubuntu-keyring_2018.09.18.1-5_all.deb
           dpkg -i debian-keyring_2020.12.24_all.deb
           dpkg -i ubuntu-keyring_2018.09.18.1-5_all.deb
-      - name: Backport debhelper on xenial and stretch
+      - name: Backport build tools on xenial and stretch
         run: |
           apt-get install -y gnupg
-          apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1A498FA2
-          echo "deb http://ppa.launchpad.net/andrew-fuller/cmake/ubuntu xenial main" > /etc/apt/sources.list.d/andrew-fuller-ubuntu-cmake-xenial.list
-          apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 5F2EA337
-          echo "deb http://ppa.launchpad.net/litenstein/debhelper12-xenial/ubuntu xenial main" > /etc/apt/sources.list.d/litenstein-ubuntu-debhelper12-xenial-xenial.list
+          apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 8B65E182
+          echo "deb http://ppa.launchpad.net/spvkgn/build-dep/ubuntu xenial main" > /etc/apt/sources.list.d/spvkgn-ubuntu-build-dep-xenial.list
           apt-get update
-          apt-get install -y debhelper
+          apt-get install -y debhelper dpkg-dev meson ninja-build
         if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial'
       - name: Backport debhelper on bionic
         run: |
           apt-get -t bionic-backports install -y debhelper
         if: matrix.target == 'ubuntu:bionic'
-      - name: Backport ninja-build on xenial
-        run: |
-          apt-get -t xenial-backports install -y ninja-build
-        if: matrix.target == 'ubuntu:xenial'
-      - name: Backport meson on older ubuntu
+      - name: Backport meson on bionic
         run: |
           cd /tmp
           apt-get install -y ninja-build
           curl -fLO https://deb.debian.org/debian/pool/main/m/meson/meson_0.49.2-1_all.deb
           dpkg -i meson_0.49.2-1_all.deb
-        if: matrix.target == 'ubuntu:xenial' || matrix.target == 'ubuntu:bionic'
+        if: matrix.target == 'ubuntu:bionic'
+      - name: Backport meson on bionic
+        run: |
+          cd /tmp
+          apt-get install -y ninja-build
+          curl -fLO https://deb.debian.org/debian/pool/main/m/meson/meson_0.49.2-1_all.deb
+          dpkg -i meson_0.49.2-1_all.deb
+        if: matrix.target == 'ubuntu:bionic'
+      - name: Backport meson on bionic
+        run: |
+          cd /tmp
+          apt-get install -y ninja-build
+          curl -fLO https://deb.debian.org/debian/pool/main/m/meson/meson_0.49.2-1_all.deb
+          dpkg -i meson_0.49.2-1_all.deb
+        if: matrix.target == 'ubuntu:bionic'
       - name: Add openvswitch apt repo
         run: |
           curl -1sLf 'https://dl.cloudsmith.io/public/wand/openvswitch/cfg/setup/bash.deb.sh' | bash
@@ -325,31 +321,25 @@ jobs:
           curl -fLO https://deb.debian.org/debian/pool/main/u/ubuntu-keyring/ubuntu-keyring_2018.09.18.1-5_all.deb
           dpkg -i debian-keyring_2020.12.24_all.deb
           dpkg -i ubuntu-keyring_2018.09.18.1-5_all.deb
-      - name: Backport debhelper on xenial and stretch
+      - name: Backport build tools on xenial and stretch
         run: |
           apt-get install -y gnupg
-          apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1A498FA2
-          echo "deb http://ppa.launchpad.net/andrew-fuller/cmake/ubuntu xenial main" > /etc/apt/sources.list.d/andrew-fuller-ubuntu-cmake-xenial.list
-          apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 5F2EA337
-          echo "deb http://ppa.launchpad.net/litenstein/debhelper12-xenial/ubuntu xenial main" > /etc/apt/sources.list.d/litenstein-ubuntu-debhelper12-xenial-xenial.list
+          apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 8B65E182
+          echo "deb http://ppa.launchpad.net/spvkgn/build-dep/ubuntu xenial main" > /etc/apt/sources.list.d/spvkgn-ubuntu-build-dep-xenial.list
           apt-get update
-          apt-get install -y debhelper
+          apt-get install -y debhelper dpkg-dev meson ninja-build
         if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial'
       - name: Backport debhelper on bionic
         run: |
           apt-get -t bionic-backports install -y debhelper
         if: matrix.target == 'ubuntu:bionic'
-      - name: Backport ninja-build on xenial
-        run: |
-          apt-get -t xenial-backports install -y ninja-build
-        if: matrix.target == 'ubuntu:xenial'
-      - name: Backport meson on older ubuntu
+      - name: Backport meson on bionic
         run: |
           cd /tmp
           apt-get install -y ninja-build
           curl -fLO https://deb.debian.org/debian/pool/main/m/meson/meson_0.49.2-1_all.deb
           dpkg -i meson_0.49.2-1_all.deb
-        if: matrix.target == 'ubuntu:xenial' || matrix.target == 'ubuntu:bionic'
+        if: matrix.target == 'ubuntu:bionic'
       - name: Add openvswitch apt repo
         run: |
           curl -1sLf 'https://dl.cloudsmith.io/public/wand/openvswitch/cfg/setup/bash.deb.sh' | bash
