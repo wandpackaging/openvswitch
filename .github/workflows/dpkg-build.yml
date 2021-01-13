@@ -82,17 +82,13 @@ jobs:
           curl -fLO https://deb.debian.org/debian/pool/main/u/ubuntu-keyring/ubuntu-keyring_2018.09.18.1-5_all.deb
           dpkg -i debian-keyring_2020.12.24_all.deb
           dpkg -i ubuntu-keyring_2018.09.18.1-5_all.deb
-      - name: Add backports repo on stretch
+      - name: Add debhelper-11 ppa on xenial and stretch
         run: |
-          echo "deb http://deb.debian.org/debian stretch-backports main" >> /etc/apt/sources.list
+          apt-get install -y gnupg
+          apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 8CF63AD3F06FC659
+          echo "deb http://ppa.launchpad.net/jonathonf/debhelper-11/ubuntu xenial main" > /etc/apt/sources.list.d/jonathonf-ubuntu-debhelper-11-xenial.list
           apt-get update
-        if: matrix.target == 'debian:stretch'
-      - name: Add debhelper-11 ppa on xenial
-        run: |
-          apt-get install -y software-properties-common
-          add-apt-repository -y ppa:jonathonf/debhelper-11
-          apt-get update
-        if: matrix.target == 'ubuntu:xenial'
+        if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial'
       - name: Backport ninja-build on xenial
         run: |
           apt-get -t xenial-backports install -y ninja-build
@@ -104,10 +100,6 @@ jobs:
           curl -fLO https://deb.debian.org/debian/pool/main/m/meson/meson_0.49.2-1_all.deb
           dpkg -i meson_0.49.2-1_all.deb
         if: matrix.target == 'ubuntu:xenial' || matrix.target == 'ubuntu:bionic'
-      - name: Backport debhelper on stretch
-        run: |
-          apt-get -t stretch-backports install -y debhelper
-        if: matrix.target == 'debian:stretch'
       - name: Build package
         run: |
           cd "./${{ matrix.package }}/"
@@ -162,17 +154,13 @@ jobs:
           curl -fLO https://deb.debian.org/debian/pool/main/u/ubuntu-keyring/ubuntu-keyring_2018.09.18.1-5_all.deb
           dpkg -i debian-keyring_2020.12.24_all.deb
           dpkg -i ubuntu-keyring_2018.09.18.1-5_all.deb
-      - name: Add backports repo on stretch
+      - name: Add debhelper-11 ppa on xenial and stretch
         run: |
-          echo "deb http://deb.debian.org/debian stretch-backports main" >> /etc/apt/sources.list
+          apt-get install -y gnupg
+          apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 8CF63AD3F06FC659
+          echo "deb http://ppa.launchpad.net/jonathonf/debhelper-11/ubuntu xenial main" > /etc/apt/sources.list.d/jonathonf-ubuntu-debhelper-11-xenial.list
           apt-get update
-        if: matrix.target == 'debian:stretch'
-      - name: Add debhelper-11 ppa on xenial
-        run: |
-          apt-get install -y software-properties-common
-          add-apt-repository -y ppa:jonathonf/debhelper-11
-          apt-get update
-        if: matrix.target == 'ubuntu:xenial'
+        if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial'
       - name: Backport ninja-build on xenial
         run: |
           apt-get -t xenial-backports install -y ninja-build
@@ -187,10 +175,6 @@ jobs:
       - name: Add openvswitch apt repo
         run: |
           curl -1sLf 'https://dl.cloudsmith.io/public/wand/openvswitch/cfg/setup/bash.deb.sh' | bash
-      - name: Backport debhelper on stretch
-        run: |
-          apt-get -t stretch-backports install -y debhelper
-        if: matrix.target == 'debian:stretch'
       - name: Build package
         run: |
           cd "./${{ matrix.package }}/"
@@ -245,17 +229,13 @@ jobs:
           curl -fLO https://deb.debian.org/debian/pool/main/u/ubuntu-keyring/ubuntu-keyring_2018.09.18.1-5_all.deb
           dpkg -i debian-keyring_2020.12.24_all.deb
           dpkg -i ubuntu-keyring_2018.09.18.1-5_all.deb
-      - name: Add backports repo on stretch
+      - name: Add debhelper-11 ppa on xenial and stretch
         run: |
-          echo "deb http://deb.debian.org/debian stretch-backports main" >> /etc/apt/sources.list
+          apt-get install -y gnupg
+          apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 8CF63AD3F06FC659
+          echo "deb http://ppa.launchpad.net/jonathonf/debhelper-11/ubuntu xenial main" > /etc/apt/sources.list.d/jonathonf-ubuntu-debhelper-11-xenial.list
           apt-get update
-        if: matrix.target == 'debian:stretch'
-      - name: Add debhelper-11 ppa on xenial
-        run: |
-          apt-get install -y software-properties-common
-          add-apt-repository -y ppa:jonathonf/debhelper-11
-          apt-get update
-        if: matrix.target == 'ubuntu:xenial'
+        if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial'
       - name: Backport ninja-build on xenial
         run: |
           apt-get -t xenial-backports install -y ninja-build
@@ -270,10 +250,6 @@ jobs:
       - name: Add openvswitch apt repo
         run: |
           curl -1sLf 'https://dl.cloudsmith.io/public/wand/openvswitch/cfg/setup/bash.deb.sh' | bash
-      - name: Backport debhelper on stretch
-        run: |
-          apt-get -t stretch-backports install -y debhelper
-        if: matrix.target == 'debian:stretch'
       - name: Build package
         run: |
           cd "./${{ matrix.package }}/"
@@ -328,17 +304,13 @@ jobs:
           curl -fLO https://deb.debian.org/debian/pool/main/u/ubuntu-keyring/ubuntu-keyring_2018.09.18.1-5_all.deb
           dpkg -i debian-keyring_2020.12.24_all.deb
           dpkg -i ubuntu-keyring_2018.09.18.1-5_all.deb
-      - name: Add backports repo on stretch
+      - name: Add debhelper-11 ppa on xenial and stretch
         run: |
-          echo "deb http://deb.debian.org/debian stretch-backports main" >> /etc/apt/sources.list
+          apt-get install -y gnupg
+          apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 8CF63AD3F06FC659
+          echo "deb http://ppa.launchpad.net/jonathonf/debhelper-11/ubuntu xenial main" > /etc/apt/sources.list.d/jonathonf-ubuntu-debhelper-11-xenial.list
           apt-get update
-        if: matrix.target == 'debian:stretch'
-      - name: Add debhelper-11 ppa on xenial
-        run: |
-          apt-get install -y software-properties-common
-          add-apt-repository -y ppa:jonathonf/debhelper-11
-          apt-get update
-        if: matrix.target == 'ubuntu:xenial'
+        if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial'
       - name: Backport ninja-build on xenial
         run: |
           apt-get -t xenial-backports install -y ninja-build
@@ -353,10 +325,6 @@ jobs:
       - name: Add openvswitch apt repo
         run: |
           curl -1sLf 'https://dl.cloudsmith.io/public/wand/openvswitch/cfg/setup/bash.deb.sh' | bash
-      - name: Backport debhelper on stretch
-        run: |
-          apt-get -t stretch-backports install -y debhelper
-        if: matrix.target == 'debian:stretch'
       - name: Build package
         run: |
           cd "./${{ matrix.package }}/"
