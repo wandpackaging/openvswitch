@@ -90,13 +90,10 @@ jobs:
           apt-get update
           apt-get install -y debhelper dpkg-dev meson ninja-build
         if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial'
-      - name: Backport debhelper on bionic
-        run: |
-          apt-get -t bionic-backports install -y debhelper
-        if: matrix.target == 'ubuntu:bionic'
-      - name: Backport meson on bionic
+      - name: Backport build tools on bionic
         run: |
           cd /tmp
+          apt-get -t bionic-backports install -y debhelper
           apt-get install -y ninja-build
           curl -fLO https://deb.debian.org/debian/pool/main/m/meson/meson_0.49.2-1_all.deb
           dpkg -i meson_0.49.2-1_all.deb
@@ -163,13 +160,10 @@ jobs:
           apt-get update
           apt-get install -y debhelper dpkg-dev meson ninja-build
         if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial'
-      - name: Backport debhelper on bionic
-        run: |
-          apt-get -t bionic-backports install -y debhelper
-        if: matrix.target == 'ubuntu:bionic'
-      - name: Backport meson on bionic
+      - name: Backport build tools on bionic
         run: |
           cd /tmp
+          apt-get -t bionic-backports install -y debhelper
           apt-get install -y ninja-build
           curl -fLO https://deb.debian.org/debian/pool/main/m/meson/meson_0.49.2-1_all.deb
           dpkg -i meson_0.49.2-1_all.deb
@@ -239,27 +233,10 @@ jobs:
           apt-get update
           apt-get install -y debhelper dpkg-dev meson ninja-build
         if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial'
-      - name: Backport debhelper on bionic
+      - name: Backport build tools on bionic
         run: |
+          cd /tmp
           apt-get -t bionic-backports install -y debhelper
-        if: matrix.target == 'ubuntu:bionic'
-      - name: Backport meson on bionic
-        run: |
-          cd /tmp
-          apt-get install -y ninja-build
-          curl -fLO https://deb.debian.org/debian/pool/main/m/meson/meson_0.49.2-1_all.deb
-          dpkg -i meson_0.49.2-1_all.deb
-        if: matrix.target == 'ubuntu:bionic'
-      - name: Backport meson on bionic
-        run: |
-          cd /tmp
-          apt-get install -y ninja-build
-          curl -fLO https://deb.debian.org/debian/pool/main/m/meson/meson_0.49.2-1_all.deb
-          dpkg -i meson_0.49.2-1_all.deb
-        if: matrix.target == 'ubuntu:bionic'
-      - name: Backport meson on bionic
-        run: |
-          cd /tmp
           apt-get install -y ninja-build
           curl -fLO https://deb.debian.org/debian/pool/main/m/meson/meson_0.49.2-1_all.deb
           dpkg -i meson_0.49.2-1_all.deb
@@ -329,13 +306,10 @@ jobs:
           apt-get update
           apt-get install -y debhelper dpkg-dev meson ninja-build
         if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial'
-      - name: Backport debhelper on bionic
-        run: |
-          apt-get -t bionic-backports install -y debhelper
-        if: matrix.target == 'ubuntu:bionic'
-      - name: Backport meson on bionic
+      - name: Backport build tools on bionic
         run: |
           cd /tmp
+          apt-get -t bionic-backports install -y debhelper
           apt-get install -y ninja-build
           curl -fLO https://deb.debian.org/debian/pool/main/m/meson/meson_0.49.2-1_all.deb
           dpkg -i meson_0.49.2-1_all.deb
