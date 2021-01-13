@@ -92,6 +92,10 @@ jobs:
           apt-get update
           apt-get install debhelper
         if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial'
+      - name: Backport debhelper on bionic
+        run: |
+          apt-get -t bionic-backports install debhelper
+        if: matrix.target == 'ubuntu:bionic'
       - name: Backport ninja-build on xenial
         run: |
           apt-get -t xenial-backports install -y ninja-build
@@ -167,6 +171,10 @@ jobs:
           apt-get update
           apt-get install debhelper
         if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial'
+      - name: Backport debhelper on bionic
+        run: |
+          apt-get -t bionic-backports install debhelper
+        if: matrix.target == 'ubuntu:bionic'
       - name: Backport ninja-build on xenial
         run: |
           apt-get -t xenial-backports install -y ninja-build
@@ -245,6 +253,10 @@ jobs:
           apt-get update
           apt-get install debhelper
         if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial'
+      - name: Backport debhelper on bionic
+        run: |
+          apt-get -t bionic-backports install debhelper
+        if: matrix.target == 'ubuntu:bionic'
       - name: Backport ninja-build on xenial
         run: |
           apt-get -t xenial-backports install -y ninja-build
@@ -323,6 +335,10 @@ jobs:
           apt-get update
           apt-get install debhelper
         if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial'
+      - name: Backport debhelper on bionic
+        run: |
+          apt-get -t bionic-backports install debhelper
+        if: matrix.target == 'ubuntu:bionic'
       - name: Backport ninja-build on xenial
         run: |
           apt-get -t xenial-backports install -y ninja-build
