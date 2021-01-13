@@ -90,7 +90,7 @@ jobs:
           apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 5F2EA337
           echo "deb http://ppa.launchpad.net/litenstein/debhelper12-xenial/ubuntu xenial main" > /etc/apt/sources.list.d/litenstein-ubuntu-debhelper12-xenial-xenial.list
           apt-get update
-          apt-get install debhelper
+          apt-get install -y debhelper
         if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial'
       - name: Backport debhelper on bionic
         run: |
@@ -169,7 +169,7 @@ jobs:
           apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 5F2EA337
           echo "deb http://ppa.launchpad.net/litenstein/debhelper12-xenial/ubuntu xenial main" > /etc/apt/sources.list.d/litenstein-ubuntu-debhelper12-xenial-xenial.list
           apt-get update
-          apt-get install debhelper
+          apt-get install -y debhelper
         if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial'
       - name: Backport debhelper on bionic
         run: |
@@ -251,7 +251,7 @@ jobs:
           apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 5F2EA337
           echo "deb http://ppa.launchpad.net/litenstein/debhelper12-xenial/ubuntu xenial main" > /etc/apt/sources.list.d/litenstein-ubuntu-debhelper12-xenial-xenial.list
           apt-get update
-          apt-get install debhelper
+          apt-get install -y debhelper
         if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial'
       - name: Backport debhelper on bionic
         run: |
@@ -333,7 +333,7 @@ jobs:
           apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 5F2EA337
           echo "deb http://ppa.launchpad.net/litenstein/debhelper12-xenial/ubuntu xenial main" > /etc/apt/sources.list.d/litenstein-ubuntu-debhelper12-xenial-xenial.list
           apt-get update
-          apt-get install debhelper
+          apt-get install -y debhelper
         if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial'
       - name: Backport debhelper on bionic
         run: |
