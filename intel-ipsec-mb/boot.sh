@@ -11,6 +11,6 @@ dpkg-source --require-valid-signature -x intel-ipsec-mb_0.55-1.dsc src
 debhelper_version=$(dpkg-query --showformat='${Version}' --show debhelper)
 
 if dpkg --compare-versions "${debhelper_version}" lt 13; then
-    sed -i 's/debhelper (>= 13)/debhelper (>= 12)/' src/debian/control
-    sed -i 's/debhelper-compat (=13)/debhelper-compat (= 12)/' src/debian/control
+    sed -i 's/debhelper (>= 13)/debhelper (>= 11)/' src/debian/control
+    sed -i 's/debhelper-compat (=13)/debhelper-compat (= 11)/' src/debian/control
 fi
