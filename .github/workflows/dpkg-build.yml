@@ -63,6 +63,9 @@ jobs:
             arch: "amd64"
         exclude:
           - target: "debian:bullseye"
+          - package: "libbpf"
+            target: "debian:buster"
+            arch: "amd64"
     env:
         BUILD_TARGET: ${{ matrix.target }}
         BUILD_ARCH: ${{ matrix.arch }}
