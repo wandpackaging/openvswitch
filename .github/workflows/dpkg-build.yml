@@ -96,7 +96,6 @@ jobs:
       - name: Backport build tools on bionic
         run: |
           cd /tmp
-          apt-get -t bionic-backports install -y debhelper
           apt-get install -y ninja-build
           curl -fLO https://deb.debian.org/debian/pool/main/m/meson/meson_0.49.2-1_all.deb
           dpkg -i meson_0.49.2-1_all.deb
@@ -166,7 +165,6 @@ jobs:
       - name: Backport build tools on bionic
         run: |
           cd /tmp
-          apt-get -t bionic-backports install -y debhelper
           apt-get install -y ninja-build
           curl -fLO https://deb.debian.org/debian/pool/main/m/meson/meson_0.49.2-1_all.deb
           dpkg -i meson_0.49.2-1_all.deb
@@ -239,7 +237,6 @@ jobs:
       - name: Backport build tools on bionic
         run: |
           cd /tmp
-          apt-get -t bionic-backports install -y debhelper
           apt-get install -y ninja-build
           curl -fLO https://deb.debian.org/debian/pool/main/m/meson/meson_0.49.2-1_all.deb
           dpkg -i meson_0.49.2-1_all.deb
@@ -312,7 +309,6 @@ jobs:
       - name: Backport build tools on bionic
         run: |
           cd /tmp
-          apt-get -t bionic-backports install -y debhelper
           apt-get install -y ninja-build
           curl -fLO https://deb.debian.org/debian/pool/main/m/meson/meson_0.49.2-1_all.deb
           dpkg -i meson_0.49.2-1_all.deb
