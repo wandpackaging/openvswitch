@@ -112,7 +112,7 @@ jobs:
           mkdir -p "${package_path}"
           mv ../*.deb "${package_path}"
       - name: Publish packages to cloudsmith
-        uses: gizmoguy/action-cloudsmith-upload-packages@fix
+        uses: gizmoguy/action-cloudsmith-upload-packages@more-tries
         with:
           path: packages/
           repo: wand/openvswitch
@@ -184,7 +184,7 @@ jobs:
           mkdir -p "${package_path}"
           mv ../*.deb "${package_path}"
       - name: Publish packages to cloudsmith
-        uses: wanduow/action-cloudsmith-upload-packages@v1.3
+        uses: gizmoguy/action-cloudsmith-upload-packages@more-tries
         with:
           path: packages/
           repo: wand/openvswitch
@@ -256,7 +256,7 @@ jobs:
           mkdir -p "${package_path}"
           mv ../*.deb "${package_path}"
       - name: Publish packages to cloudsmith
-        uses: wanduow/action-cloudsmith-upload-packages@v1.3
+        uses: gizmoguy/action-cloudsmith-upload-packages@more-tries
         with:
           path: packages/
           repo: wand/openvswitch
@@ -328,7 +328,7 @@ jobs:
           mkdir -p "${package_path}"
           mv ../*.deb "${package_path}"
       - name: Publish packages to cloudsmith
-        uses: wanduow/action-cloudsmith-upload-packages@v1.3
+        uses: gizmoguy/action-cloudsmith-upload-packages@more-tries
         with:
           path: packages/
           repo: wand/openvswitch
