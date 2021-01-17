@@ -63,6 +63,8 @@ jobs:
             arch: "amd64"
         exclude:
           - target: "debian:bullseye"
+          - target: "ubuntu:focal"
+          - target: "ubuntu:groovy"
           - package: "libbpf"
             target: "debian:buster"
             arch: "amd64"
@@ -135,6 +137,8 @@ jobs:
           - amd64
         exclude:
           - target: "debian:bullseye"
+          - target: "ubuntu:focal"
+          - target: "ubuntu:groovy"
     env:
         BUILD_TARGET: ${{ matrix.target }}
         BUILD_ARCH: ${{ matrix.arch }}
@@ -207,6 +211,8 @@ jobs:
           - amd64
         exclude:
           - target: "debian:bullseye"
+          - target: "ubuntu:focal"
+          - target: "ubuntu:groovy"
     env:
         BUILD_TARGET: ${{ matrix.target }}
         BUILD_ARCH: ${{ matrix.arch }}
