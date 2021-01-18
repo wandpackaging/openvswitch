@@ -68,7 +68,6 @@ jobs:
             target: "debian:buster"
             arch: "amd64"
           - target: "debian:bullseye"
-          - target: "ubuntu:focal"
           - target: "ubuntu:groovy"
           - target: "ubuntu:hirsute"
     env:
