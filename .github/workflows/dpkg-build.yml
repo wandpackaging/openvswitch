@@ -7,6 +7,8 @@ on:
 
 env:
   DEBIAN_FRONTEND: noninteractive
+  DEBEMAIL: packaging@wand.net.nz
+  DEBFULLNAME: WAND Packaging
 
 jobs:
   build-matrix:
