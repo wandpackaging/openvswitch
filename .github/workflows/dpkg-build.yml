@@ -278,6 +278,7 @@ jobs:
       - stage3-build
     container:
       image: ${{ matrix.target }}
+      options: --privileged
     strategy:
       matrix:
         package:
