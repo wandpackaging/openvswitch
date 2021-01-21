@@ -48,7 +48,7 @@ jobs:
       - build-matrix
     container:
       image: ${{ matrix.target }}
-      options: --privileged
+      options: --privileged --sysctl net.ipv6.conf.all.disable_ipv6=0
     strategy:
       matrix:
         package:
