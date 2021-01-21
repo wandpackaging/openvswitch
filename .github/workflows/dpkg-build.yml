@@ -101,7 +101,7 @@ jobs:
           ./boot.sh
           cd src
           mk-build-deps -i -r -t "apt-get -f -y --force-yes"
-          dpkg-buildpackage -b -us -uc -rfakeroot -j4
+          dpkg-buildpackage -b -us -uc -rfakeroot -j1
           dirname=$(echo ${{ matrix.target }} | tr ':' '_')
           package_path="${GITHUB_WORKSPACE}/packages/${dirname}"
           mkdir -p "${package_path}"
