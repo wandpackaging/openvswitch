@@ -48,6 +48,7 @@ jobs:
       - build-matrix
     container:
       image: ${{ matrix.target }}
+      options: --init
     strategy:
       matrix:
         package:
