@@ -74,6 +74,10 @@ jobs:
         BUILD_TARGET: ${{ matrix.target }}
         BUILD_ARCH: ${{ matrix.arch }}
         BUILD_PACKAGE: ${{ matrix.package }}
+        RDMACORE_CHANGE_VERSION: "32.0-2"
+        RDMACORE_CHANGE_MSG: "Rebuild package for Ubuntu Xenial without etc/modprobe.d/mlx4.conf"
+        RDMACORE_CHANGE_AUTHOR: "Brad Cowie"
+        RDMACORE_CHANGE_EMAIL: "brad@wand.net.nz"
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
@@ -109,6 +113,17 @@ jobs:
           cd "./${{ matrix.package }}/"
           ./boot.sh
           cd src
+          if test "${{ matrix.package }}" = "rdma-core"; then
+            changelog_entry="\
+          rdma-core (${RDMACORE_CHANGE_VERSION}) unstable\; urgency=medium\n\n\
+            * ${RDMACORE_CHANGE_MSG}\n\n\
+           -- ${RDMACORE_CHANGE_AUTHOR} <${RDMACORE_CHANGE_EMAIL}>  $(date --rfc-2822)\n\n"
+            sed -i "1s;^;${changelog_entry};" debian/changelog
+            if test "${{ matrix.target }}" = "ubuntu:xenial"; then
+              sed -zi 's/install(FILES "mlx4.conf" DESTINATION "${CMAKE_INSTALL_SYSCONFDIR}\/modprobe.d\/")\n//' providers/mlx4/CMakeLists.txt
+              sed -zi 's/etc\/modprobe.d\/mlx4.conf\n//' debian/rdma-core.install
+            fi
+          fi
           mk-build-deps -i -r -t "apt-get -f -y --force-yes"
           dpkg-buildpackage -b -us -uc -rfakeroot -j4
           dirname=$(echo ${{ matrix.target }} | tr ':' '_')
