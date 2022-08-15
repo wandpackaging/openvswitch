@@ -68,8 +68,7 @@ jobs:
             target: "debian:buster"
             arch: "amd64"
           - target: "debian:bullseye"
-          - target: "ubuntu:groovy"
-          - target: "ubuntu:hirsute"
+          - target: "ubuntu:jammy"
     env:
         BUILD_TARGET: ${{ matrix.target }}
         BUILD_ARCH: ${{ matrix.arch }}
@@ -85,10 +84,10 @@ jobs:
       - name: Backport gpg keyrings
         run: |
           cd /tmp
-          curl -fLO https://deb.debian.org/debian/pool/main/d/debian-keyring/debian-keyring_2020.12.24_all.deb
-          curl -fLO https://deb.debian.org/debian/pool/main/u/ubuntu-keyring/ubuntu-keyring_2018.09.18.1-5_all.deb
-          dpkg -i debian-keyring_2020.12.24_all.deb
-          dpkg -i ubuntu-keyring_2018.09.18.1-5_all.deb
+          curl -fLO https://deb.debian.org/debian/pool/main/d/debian-keyring/debian-keyring_2022.08.11_all.deb
+          curl -fLO https://deb.debian.org/debian/pool/main/u/ubuntu-keyring/ubuntu-keyring_2020.06.17.1-1_all.deb
+          dpkg -i debian-keyring_2022.08.11_all.deb
+          dpkg -i ubuntu-keyring_2020.06.17.1-1_all.deb
       - name: Backport build tools on xenial and stretch
         run: |
           apt-get install -y gnupg
@@ -146,8 +145,7 @@ jobs:
         exclude:
           - target: "debian:bullseye"
           - target: "ubuntu:focal"
-          - target: "ubuntu:groovy"
-          - target: "ubuntu:hirsute"
+          - target: "ubuntu:jammy"
     env:
         BUILD_TARGET: ${{ matrix.target }}
         BUILD_ARCH: ${{ matrix.arch }}
@@ -163,10 +161,10 @@ jobs:
       - name: Backport gpg keyrings
         run: |
           cd /tmp
-          curl -fLO https://deb.debian.org/debian/pool/main/d/debian-keyring/debian-keyring_2020.12.24_all.deb
-          curl -fLO https://deb.debian.org/debian/pool/main/u/ubuntu-keyring/ubuntu-keyring_2018.09.18.1-5_all.deb
-          dpkg -i debian-keyring_2020.12.24_all.deb
-          dpkg -i ubuntu-keyring_2018.09.18.1-5_all.deb
+          curl -fLO https://deb.debian.org/debian/pool/main/d/debian-keyring/debian-keyring_2022.08.11_all.deb
+          curl -fLO https://deb.debian.org/debian/pool/main/u/ubuntu-keyring/ubuntu-keyring_2020.06.17.1-1_all.deb
+          dpkg -i debian-keyring_2022.08.11_all.deb
+          dpkg -i ubuntu-keyring_2020.06.17.1-1_all.deb
       - name: Backport build tools on xenial and stretch
         run: |
           apt-get install -y gnupg
@@ -226,7 +224,7 @@ jobs:
           - amd64
         exclude:
           - target: "debian:bullseye"
-          - target: "ubuntu:hirsute"
+          - target: "ubuntu:jammy"
     env:
         BUILD_TARGET: ${{ matrix.target }}
         BUILD_ARCH: ${{ matrix.arch }}
@@ -242,10 +240,10 @@ jobs:
       - name: Backport gpg keyrings
         run: |
           cd /tmp
-          curl -fLO https://deb.debian.org/debian/pool/main/d/debian-keyring/debian-keyring_2020.12.24_all.deb
-          curl -fLO https://deb.debian.org/debian/pool/main/u/ubuntu-keyring/ubuntu-keyring_2018.09.18.1-5_all.deb
-          dpkg -i debian-keyring_2020.12.24_all.deb
-          dpkg -i ubuntu-keyring_2018.09.18.1-5_all.deb
+          curl -fLO https://deb.debian.org/debian/pool/main/d/debian-keyring/debian-keyring_2022.08.11_all.deb
+          curl -fLO https://deb.debian.org/debian/pool/main/u/ubuntu-keyring/ubuntu-keyring_2020.06.17.1-1_all.deb
+          dpkg -i debian-keyring_2022.08.11_all.deb
+          dpkg -i ubuntu-keyring_2020.06.17.1-1_all.deb
       - name: Backport build tools on xenial and stretch
         run: |
           apt-get install -y gnupg
@@ -305,7 +303,7 @@ jobs:
         arch:
           - amd64
         exclude:
-          - target: "debian:bullseye"
+          - target: "ubuntu:jammy"
     env:
         BUILD_TARGET: ${{ matrix.target }}
         BUILD_ARCH: ${{ matrix.arch }}
