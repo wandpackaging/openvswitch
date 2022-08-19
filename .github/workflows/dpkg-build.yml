@@ -88,6 +88,22 @@ jobs:
           curl -fLO https://deb.debian.org/debian/pool/main/u/ubuntu-keyring/ubuntu-keyring_2020.06.17.1-1_all.deb
           dpkg -i debian-keyring_2022.08.11_all.deb
           dpkg -i ubuntu-keyring_2020.06.17.1-1_all.deb
+      - name: Backport cmake on stretch
+        run: |
+          echo "deb http://deb.debian.org/debian stretch-backports main" >> /etc/apt/sources.list
+          echo "deb http://deb.debian.org/debian stretch-backports-sloppy main" >> /etc/apt/sources.list
+          apt-get update
+          apt-get install -y -t stretch-backports-sloppy libarchive13
+          apt-get install -y -t stretch-backports cmake
+        if: matrix.target == 'debian:stretch'
+      - name: Backport cmake on xenial
+        run: |
+          apt-get install -y apt-transport-https
+          curl -fsSL https://apt.kitware.com/keys/kitware-archive-latest.asc | gpg --dearmor -o /usr/share/keyrings/kitware-archive-keyring.gpg
+          echo 'deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ xenial main' > /etc/apt/sources.list.d/kitware.list
+          apt-get update
+          apt-get install -y cmake
+        if: matrix.target == 'ubuntu:xenial'
       - name: Backport build tools on xenial and stretch
         run: |
           apt-get install -y gnupg
@@ -165,6 +181,22 @@ jobs:
           curl -fLO https://deb.debian.org/debian/pool/main/u/ubuntu-keyring/ubuntu-keyring_2020.06.17.1-1_all.deb
           dpkg -i debian-keyring_2022.08.11_all.deb
           dpkg -i ubuntu-keyring_2020.06.17.1-1_all.deb
+      - name: Backport cmake on stretch
+        run: |
+          echo "deb http://deb.debian.org/debian stretch-backports main" >> /etc/apt/sources.list
+          echo "deb http://deb.debian.org/debian stretch-backports-sloppy main" >> /etc/apt/sources.list
+          apt-get update
+          apt-get install -y -t stretch-backports-sloppy libarchive13
+          apt-get install -y -t stretch-backports cmake
+        if: matrix.target == 'debian:stretch'
+      - name: Backport cmake on xenial
+        run: |
+          apt-get install -y apt-transport-https
+          curl -fsSL https://apt.kitware.com/keys/kitware-archive-latest.asc | gpg --dearmor -o /usr/share/keyrings/kitware-archive-keyring.gpg
+          echo 'deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ xenial main' > /etc/apt/sources.list.d/kitware.list
+          apt-get update
+          apt-get install -y cmake
+        if: matrix.target == 'ubuntu:xenial'
       - name: Backport build tools on xenial and stretch
         run: |
           apt-get install -y gnupg
@@ -244,6 +276,22 @@ jobs:
           curl -fLO https://deb.debian.org/debian/pool/main/u/ubuntu-keyring/ubuntu-keyring_2020.06.17.1-1_all.deb
           dpkg -i debian-keyring_2022.08.11_all.deb
           dpkg -i ubuntu-keyring_2020.06.17.1-1_all.deb
+      - name: Backport cmake on stretch
+        run: |
+          echo "deb http://deb.debian.org/debian stretch-backports main" >> /etc/apt/sources.list
+          echo "deb http://deb.debian.org/debian stretch-backports-sloppy main" >> /etc/apt/sources.list
+          apt-get update
+          apt-get install -y -t stretch-backports-sloppy libarchive13
+          apt-get install -y -t stretch-backports cmake
+        if: matrix.target == 'debian:stretch'
+      - name: Backport cmake on xenial
+        run: |
+          apt-get install -y apt-transport-https
+          curl -fsSL https://apt.kitware.com/keys/kitware-archive-latest.asc | gpg --dearmor -o /usr/share/keyrings/kitware-archive-keyring.gpg
+          echo 'deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ xenial main' > /etc/apt/sources.list.d/kitware.list
+          apt-get update
+          apt-get install -y cmake
+        if: matrix.target == 'ubuntu:xenial'
       - name: Backport build tools on xenial and stretch
         run: |
           apt-get install -y gnupg
@@ -323,6 +371,22 @@ jobs:
           curl -fLO https://deb.debian.org/debian/pool/main/u/ubuntu-keyring/ubuntu-keyring_2018.09.18.1-5_all.deb
           dpkg -i debian-keyring_2020.12.24_all.deb
           dpkg -i ubuntu-keyring_2018.09.18.1-5_all.deb
+      - name: Backport cmake on stretch
+        run: |
+          echo "deb http://deb.debian.org/debian stretch-backports main" >> /etc/apt/sources.list
+          echo "deb http://deb.debian.org/debian stretch-backports-sloppy main" >> /etc/apt/sources.list
+          apt-get update
+          apt-get install -y -t stretch-backports-sloppy libarchive13
+          apt-get install -y -t stretch-backports cmake
+        if: matrix.target == 'debian:stretch'
+      - name: Backport cmake on xenial
+        run: |
+          apt-get install -y apt-transport-https
+          curl -fsSL https://apt.kitware.com/keys/kitware-archive-latest.asc | gpg --dearmor -o /usr/share/keyrings/kitware-archive-keyring.gpg
+          echo 'deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ xenial main' > /etc/apt/sources.list.d/kitware.list
+          apt-get update
+          apt-get install -y cmake
+        if: matrix.target == 'ubuntu:xenial'
       - name: Backport build tools on xenial and stretch
         run: |
           apt-get install -y gnupg
