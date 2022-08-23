@@ -34,6 +34,7 @@ jobs:
           done
 
           releases+=("debian:stretch")
+          releases+=("ubuntu:xenial")
 
           matrix=$(printf "%s\n" "${releases[@]}" | jq -nRc '[inputs]')
 
