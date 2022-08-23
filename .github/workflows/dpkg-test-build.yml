@@ -1,9 +1,6 @@
-name: Debian Package Build
+name: Test Debian Package Build
 
-on:
-  push:
-    branches:
-      - 'main'
+on: [pull_request]
 
 env:
   DEBIAN_FRONTEND: noninteractive
@@ -137,13 +134,6 @@ jobs:
           package_path="${GITHUB_WORKSPACE}/packages/${dirname}"
           mkdir -p "${package_path}"
           mv ../*.deb "${package_path}"
-      - name: Publish packages to cloudsmith
-        uses: wanduow/action-cloudsmith-upload-packages@v1
-        with:
-          path: packages/
-          repo: wand/openvswitch
-          username: brad-cowie
-          api_key: ${{ secrets.CLOUDSMITH_API_KEY }}
 
   stage2-build:
     runs-on: ubuntu-latest
@@ -233,13 +223,6 @@ jobs:
           package_path="${GITHUB_WORKSPACE}/packages/${dirname}"
           mkdir -p "${package_path}"
           mv ../*.deb "${package_path}"
-      - name: Publish packages to cloudsmith
-        uses: wanduow/action-cloudsmith-upload-packages@v1
-        with:
-          path: packages/
-          repo: wand/openvswitch
-          username: brad-cowie
-          api_key: ${{ secrets.CLOUDSMITH_API_KEY }}
 
   stage3-build:
     runs-on: ubuntu-latest
@@ -328,13 +311,6 @@ jobs:
           package_path="${GITHUB_WORKSPACE}/packages/${dirname}"
           mkdir -p "${package_path}"
           mv ../*.deb "${package_path}"
-      - name: Publish packages to cloudsmith
-        uses: wanduow/action-cloudsmith-upload-packages@v1
-        with:
-          path: packages/
-          repo: wand/openvswitch
-          username: brad-cowie
-          api_key: ${{ secrets.CLOUDSMITH_API_KEY }}
 
   stage4-build:
     runs-on: ubuntu-latest
@@ -423,10 +399,3 @@ jobs:
           package_path="${GITHUB_WORKSPACE}/packages/${dirname}"
           mkdir -p "${package_path}"
           mv ../*.deb "${package_path}"
-      - name: Publish packages to cloudsmith
-        uses: wanduow/action-cloudsmith-upload-packages@v1
-        with:
-          path: packages/
-          repo: wand/openvswitch
-          username: brad-cowie
-          api_key: ${{ secrets.CLOUDSMITH_API_KEY }}

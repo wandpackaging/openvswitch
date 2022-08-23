@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-git clone --recurse-submodules https://salsa.debian.org/openstack-team/third-party/openvswitch -b debian/2.15.0+ds1-2 src
+git clone --recurse-submodules https://salsa.debian.org/openstack-team/third-party/openvswitch -b debian/2.17.2-3 src
 
 # ovs won't build from a git checkout
 rm -rf ./src/.git
