@@ -107,7 +107,7 @@ jobs:
           apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 8B65E182
           echo "deb http://ppa.launchpad.net/spvkgn/build-dep/ubuntu xenial main" > /etc/apt/sources.list.d/spvkgn-ubuntu-build-dep-xenial.list
           apt-get update
-          apt-get install -y debhelper dpkg-dev meson ninja-build
+          apt-get install -y debhelper dpkg dpkg-dev meson ninja-build
         if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial'
       - name: Backport build tools on bionic
         run: |
@@ -193,7 +193,7 @@ jobs:
           apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 8B65E182
           echo "deb http://ppa.launchpad.net/spvkgn/build-dep/ubuntu xenial main" > /etc/apt/sources.list.d/spvkgn-ubuntu-build-dep-xenial.list
           apt-get update
-          apt-get install -y debhelper dpkg-dev meson ninja-build
+          apt-get install -y debhelper dpkg dpkg-dev meson ninja-build
         if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial'
       - name: Backport build tools on bionic
         run: |
@@ -281,7 +281,7 @@ jobs:
           apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 8B65E182
           echo "deb http://ppa.launchpad.net/spvkgn/build-dep/ubuntu xenial main" > /etc/apt/sources.list.d/spvkgn-ubuntu-build-dep-xenial.list
           apt-get update
-          apt-get install -y debhelper dpkg-dev meson ninja-build
+          apt-get install -y debhelper dpkg dpkg-dev meson ninja-build
         if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial'
       - name: Backport build tools on bionic
         run: |
@@ -369,7 +369,7 @@ jobs:
           apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 8B65E182
           echo "deb http://ppa.launchpad.net/spvkgn/build-dep/ubuntu xenial main" > /etc/apt/sources.list.d/spvkgn-ubuntu-build-dep-xenial.list
           apt-get update
-          apt-get install -y debhelper dpkg-dev meson ninja-build
+          apt-get install -y debhelper dpkg dpkg-dev meson ninja-build
         if: matrix.target == 'debian:stretch' || matrix.target == 'ubuntu:xenial'
       - name: Backport build tools on bionic
         run: |
